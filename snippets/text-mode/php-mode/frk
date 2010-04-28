@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: foreach($a as $k => $v) { ... }
+# --
+foreach(\$${1:var} as ${2:key} => ${3:value}) {
+    $4
+}

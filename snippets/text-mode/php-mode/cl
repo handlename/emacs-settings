@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: class { ... }
+# --
+/**
+ * ${description}
+ *
+ * @params
+ * @return
+ */
+class ${className}
+{
+    public function __construct() {
+        $0
+    }
+}

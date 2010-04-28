@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: public static function name(...) { ... }
+# --
+/**
+ * ${1:description}
+ *
+ * @param
+ * @return
+ */
+public static function ${2:name}(${3:params}) {
+    $4
+}
