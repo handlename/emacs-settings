@@ -1,9 +1,12 @@
-;; ;;; .emacs written by NAGATA Hiroaki (handlename.net)
+;; .emacs written by NAGATA Hiroaki (handlename.net)
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+(let ((default-directory "~/.emacs.d/site-lisp/"))
+  (setq load-path (cons default-directory load-path))
+  (normal-top-level-add-subdirs-to-load-path))
 
 (require 'cl)
 
+(setq byte-compile-warnings '(free-vars unresolved callargs redefine obsolete noruntime cl-functions interactive-only make-local))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,13 +33,10 @@
 
 (if window-system
     (progn
-      (set-background-color "#000000")     ; 背景色
-      (set-foreground-color "LightGray")   ; 文字色
-      (set-cursor-color "Red")             ; カーソル色
-      (set-frame-parameter nil 'alpha 80)  ; 透明度
+      (set-frame-parameter nil 'alpha 100) ; 透明度
       (tool-bar-mode nil)                  ; ツールバー非表示
       (set-scroll-bar-mode nil)            ; スクロールバー非表示
-      (global-linum-mode)                  ; 行数表示
+      ;(global-linum-mode)                 ; 行数表示
       (setq line-spacing 0.2)              ; 行間
       (when (>= emacs-major-version 23)
         (tool-bar-mode nil)
@@ -66,6 +66,21 @@
       ;(ns-toggle-fullscreen)
       (setq ns-pop-up-frames nil)
       ))
+
+(add-to-list 'default-frame-alist '(foreground-color . "Black"))     ; 文字色
+(add-to-list 'default-frame-alist '(background-color . "OliveDrab")) ; 背景色
+(add-to-list 'default-frame-alist '(cursor-color . "Red"))           ; カーソル色
+(set-face-background 'region "MediumPurple")                         ; リージョン
+(set-face-foreground 'modeline "honeydew3")                          ; モードライン文字
+(set-face-background 'modeline "DarkGreen")                          ; モードライン背景
+(set-face-foreground 'mode-line-inactive "DarkGreen")                ; モードライン文字(非アクティブ)
+(set-face-background 'mode-line-inactive "OliveDrab")                ; モードライン背景(非アクティブ)
+(set-face-foreground 'font-lock-comment-delimiter-face "honeydew3")  ; コメントデリミタ
+(set-face-foreground 'font-lock-comment-face "honeydew3")            ; コメント
+(set-face-foreground 'font-lock-string-face "yellow3")               ; 文字列
+(set-face-foreground 'font-lock-function-name-face "SkyBlue2")       ; 関数名
+(set-face-foreground 'font-lock-keyword-face "salmon1")              ; キーワード
+(set-face-foreground 'font-lock-constant-face "DarkGreen")           ; 定数
 
 
 ;;
@@ -330,13 +345,23 @@ The current implementation checks
 
 
 ;;
+;; elscreen
+;;______________________________________________________________________
+
+(load "elscreen" "ElScreen" t)
+(setq elscreen-display-tab nil) ; タブを非表示
+(define-key global-map (kbd "M-t") 'elscreen-next)
+(define-key global-map (kbd "M-C-t") 'elscreen-create)
+(define-key global-map (kbd "M-C-w") 'elscreen-kill)
+
+;;
 ;; highlight
 ;;______________________________________________________________________
 
 ;; highlight current line
 (require 'highlight-current-line)
 (highlight-current-line-on t)
-(set-face-background 'highlight-current-line-face "#191919")
+(set-face-background 'highlight-current-line-face "DarkOliveGreen")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -352,7 +377,7 @@ The current implementation checks
 ;; highlight current buffer
 ;; http://ksugita.blog62.fc2.com/blog-entry-8.html
 (load-file "~/.emacs.d/site-lisp/hiwin.el")
-(setq hiwin-color "#101010")
+(setq hiwin-color "OliveDrab")
 (hiwin-mode)
 
 
@@ -677,57 +702,55 @@ The current implementation checks
 ;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
 (require 'set-perl5lib)
 
-;; The face for errors and warnings
+;; Error＆Warning色設定
 (set-face-background 'flymake-errline "red4")
 (set-face-foreground 'flymake-errline "white")
 (set-face-background 'flymake-warnline "yellow")
 (set-face-foreground 'flymake-warnline "black")
 
-;; ;; Display errer message in mini buffer
-;; ;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
-;; (defun flymake-display-err-minibuf ()
-;;   "Displays the error/warning for the current line in the minibuffer"
-;;   (interactive)
-;;   (let* ((line-no             (flymake-current-line-no))
-;;          (line-err-info-list  (nth 0 (flymake-find-err-info
-;;                                       flymake-err-info line-no)))
-;;          (count               (length line-err-info-list)))
-;;     (while (> count 0)
-;;       (when line-err-info-list
-;;         (let* ((file       (flymake-ler-file
-;;                             (nth (1- count) line-err-info-list)))
-;;                (full-file  (flymake-ler-full-file
-;;                             (nth (1- count) line-err-info-list)))
-;;                (text       (flymake-ler-text
-;;                             (nth (1- count) line-err-info-list)))
-;;                (line       (flymake-ler-line
-;;                             (nth (1- count) line-err-info-list))))
-;;           (message "[%s] %s" line text)))
-;;       (setq count (1- count)))))
-;; (global-set-key "\C-cd" 'flymake-display-err-minibuf)
+;; エラーメッセージを見にバッファに表示
+;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
+(defun flymake-display-err-minibuf ()
+  "Displays the error/warning for the current line in the minibuffer"
+  (interactive)
+  (let* ((line-no             (flymake-current-line-no))
+         (line-err-info-list  (nth 0 (flymake-find-err-info
+                                      flymake-err-info line-no)))
+         (count               (length line-err-info-list)))
+    (while (> count 0)
+      (when line-err-info-list
+        (let* ((file       (flymake-ler-file
+                            (nth (1- count) line-err-info-list)))
+               (full-file  (flymake-ler-full-file
+                            (nth (1- count) line-err-info-list)))
+               (text       (flymake-ler-text
+                            (nth (1- count) line-err-info-list)))
+               (line       (flymake-ler-line
+                            (nth (1- count) line-err-info-list))))
+          (message "[%s] %s" line text)))
+      (setq count (1- count)))))
+(global-set-key "\C-cd" 'flymake-display-err-minibuf)
 
-;; flymake (Emacs22から標準添付されている)
-;; (global-set-key "\C-cd" 'flymake-display-err-menu-for-current-line)
-;; ;; PHP用設定
-;; (when (not (fboundp 'flymake-php-init))
-;;   ;; flymake-php-initが未定義のバージョンだったら、自分で定義する
-;;   (defun flymake-php-init ()
-;;     (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-;;                          'flymake-create-temp-inplace))
-;;            (local-file  (file-relative-name
-;;                          temp-file
-;;                          (file-name-directory buffer-file-name))))
-;;       (list "php" (list "-f" local-file "-l"))))
-;;   (setq flymake-allowed-file-name-masks
-;;         (append
-;;          flymake-allowed-file-name-masks
-;;          '(("\\.php[345]?$" flymake-php-init))))
-;;   (setq flymake-err-line-patterns
-;;         (cons
-;;          '("\\(\\(?:Parse error\\|Fatal error\\|Warning\\): .*\\) in \\(.*\\) on line \\([0-9]+\\)" 2 3 nil 1)
-;;          flymake-err-line-patterns)))
-;; (add-hook 'php-mode-hook
-;;           '(lambda() (flymake-mode t))))
+;; PHP用設定
+(when (not (fboundp 'flymake-php-init))
+  ;; flymake-php-initが未定義のバージョンだったら、自分で定義する
+  (defun flymake-php-init ()
+    (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+                         'flymake-create-temp-inplace))
+           (local-file  (file-relative-name
+                         temp-file
+                         (file-name-directory buffer-file-name))))
+      (list "php" (list "-f" local-file "-l"))))
+  (setq flymake-allowed-file-name-masks
+        (append
+         flymake-allowed-file-name-masks
+         '(("\\.php[345]?$" flymake-php-init))))
+  (setq flymake-err-line-patterns
+        (cons
+         '("\\(\\(?:Parse error\\|Fatal error\\|Warning\\): .*\\) in \\(.*\\) on line \\([0-9]+\\)" 2 3 nil 1)
+         flymake-err-line-patterns)))
+(add-hook 'php-mode-hook
+          '(lambda() (flymake-mode t)))
 
 ;; for C
 ;; (defun flymake-c-init ()
@@ -872,7 +895,7 @@ The current implementation checks
 ;;______________________________________________________________________
 
 ; 下の方に置かないとうまくいかない
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/ac-dict")
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
 (global-set-key (kbd "M-_") 'auto-complete)
