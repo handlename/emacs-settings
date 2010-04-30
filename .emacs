@@ -36,7 +36,6 @@
       (set-frame-parameter nil 'alpha 100) ; 透明度
       (tool-bar-mode nil)                  ; ツールバー非表示
       (set-scroll-bar-mode nil)            ; スクロールバー非表示
-      ;(global-linum-mode)                 ; 行数表示
       (setq line-spacing 0.2)              ; 行間
       (when (>= emacs-major-version 23)
         (tool-bar-mode nil)
@@ -67,20 +66,24 @@
       (setq ns-pop-up-frames nil)
       ))
 
-(set-foreground-color "#203020")                                    ; 文字色
-(set-background-color "OliveDrab")                                  ; 背景色
-(add-to-list 'default-frame-alist '(cursor-color . "Red"))          ; カーソル色
-(set-face-background 'region "MediumPurple")                        ; リージョン
-(set-face-foreground 'modeline "honeydew3")                         ; モードライン文字
-(set-face-background 'modeline "#496B22")                           ; モードライン背景
-(set-face-foreground 'mode-line-inactive "DarkGreen")               ; モードライン文字(非アクティブ)
-(set-face-background 'mode-line-inactive "OliveDrab")               ; モードライン背景(非アクティブ)
-(set-face-foreground 'font-lock-comment-delimiter-face "honeydew3") ; コメントデリミタ
-(set-face-foreground 'font-lock-comment-face "honeydew3")           ; コメント
-(set-face-foreground 'font-lock-string-face "#990000")              ; 文字列
-(set-face-foreground 'font-lock-function-name-face "#B000FF")       ; 関数名
-(set-face-foreground 'font-lock-keyword-face "#FFBF00")             ; キーワード
-(set-face-foreground 'font-lock-constant-face "DarkGreen")          ; 定数
+(set-foreground-color "#AACF70")                               ; 文字色
+(set-background-color "#496B22")                               ; 背景色
+(add-to-list 'default-frame-alist '(cursor-color . "Red"))     ; カーソル色
+(set-face-background 'region "MediumPurple")                   ; リージョン
+(set-face-foreground 'modeline "gray")                         ; モードライン文字
+(set-face-background 'modeline "#102010")                      ; モードライン背景
+(set-face-foreground 'mode-line-inactive "gray")               ; モードライン文字(非アクティブ)
+(set-face-background 'mode-line-inactive "#496B22")            ; モードライン背景(非アクティブ)
+(set-face-foreground 'font-lock-comment-delimiter-face "gray") ; コメントデリミタ
+(set-face-foreground 'font-lock-comment-face "gray")           ; コメント
+(set-face-foreground 'font-lock-string-face "#A0A030")         ; 文字列
+(set-face-foreground 'font-lock-function-name-face "#CAAF00")  ; 関数名
+(set-face-foreground 'font-lock-keyword-face "#AACF00")        ; キーワード
+(set-face-foreground 'font-lock-constant-face "#60B060")       ; 定数
+(set-face-foreground 'font-lock-variable-name-face "#AAAE00")  ; 変数
+(set-face-foreground 'font-lock-type-face "#AAAE90")           ; クラス
+(set-face-foreground 'fringe "gray")                           ; fringe(折り返し記号なでが出る部分)
+(set-face-background 'fringe "#597B32")                        ; fringe
 
 
 ;;
@@ -156,6 +159,14 @@
 
 ;; Delete trailing whitespace before saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; 行番号表示
+(global-linum-mode)
+(setq linum-format "%5d")
+(setq linum-
+
+;; スタートページ非表示
+(setq inhibit-startup-message t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -234,6 +245,7 @@
 
 (define-key anything-map (kbd "C-M-n") 'anything-next-source)
 (define-key anything-map (kbd "C-M-p") 'anything-previous-source)
+
 
 ;; Don't record histories. If not, anything get error
 (remove-hook 'kill-emacs-hook 'anything-c-adaptive-save-history)
@@ -359,7 +371,7 @@ The current implementation checks
 ;; highlight current line
 (require 'highlight-current-line)
 (highlight-current-line-on t)
-(set-face-background 'highlight-current-line-face "DarkOliveGreen")
+(set-face-background 'highlight-current-line-face "#597B32")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -454,7 +466,6 @@ The current implementation checks
 (yas/initialize)
 (setq yas/root-directory "~/.emacs.d/snippets")
 (yas/load-directory yas/root-directory)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; major mode settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
