@@ -81,7 +81,7 @@
 (set-face-foreground 'font-lock-keyword-face "#AACF00")        ; キーワード
 (set-face-foreground 'font-lock-constant-face "#60B060")       ; 定数
 (set-face-foreground 'font-lock-variable-name-face "#AAAE00")  ; 変数
-(set-face-foreground 'font-lock-type-face "#AAAE90")           ; クラス
+(set-face-foreground 'font-lock-type-face "#CAAE90")           ; クラス
 (set-face-foreground 'fringe "gray")                           ; fringe(折り返し記号なでが出る部分)
 (set-face-background 'fringe "#597B32")                        ; fringe
 
@@ -724,7 +724,7 @@ The current implementation checks
 
 (require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
-(set-face-background 'mmm-default-submode-face "#101010")
+(set-face-background 'mmm-default-submode-face "#395B12")
 
 ;; Setting from http://www.bookshelf.jp/soft/meadow_13.html#SEC101
 
@@ -764,6 +764,14 @@ The current implementation checks
         (add-to-list 'mmm-save-local-variables `(,(car v) nil
                                                  ,mmm-c-derived-modes))))))
 (save-mmm-c-locals)
+
+;; yaml + php
+(mmm-add-classes
+ '((mmm-php-in-yaml
+    :submode php-mode
+    :front "<\\?\\(php\\)?"
+    :back "\\?>")))
+(mmm-add-mode-ext-class nil "\\.yml?\\'" 'mmm-php-in-yaml)
 
 
 ;;
