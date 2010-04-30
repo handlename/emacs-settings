@@ -67,20 +67,20 @@
       (setq ns-pop-up-frames nil)
       ))
 
-(add-to-list 'default-frame-alist '(foreground-color . "Black"))     ; 文字色
-(add-to-list 'default-frame-alist '(background-color . "OliveDrab")) ; 背景色
-(add-to-list 'default-frame-alist '(cursor-color . "Red"))           ; カーソル色
-(set-face-background 'region "MediumPurple")                         ; リージョン
-(set-face-foreground 'modeline "honeydew3")                          ; モードライン文字
-(set-face-background 'modeline "DarkGreen")                          ; モードライン背景
-(set-face-foreground 'mode-line-inactive "DarkGreen")                ; モードライン文字(非アクティブ)
-(set-face-background 'mode-line-inactive "OliveDrab")                ; モードライン背景(非アクティブ)
-(set-face-foreground 'font-lock-comment-delimiter-face "honeydew3")  ; コメントデリミタ
-(set-face-foreground 'font-lock-comment-face "honeydew3")            ; コメント
-(set-face-foreground 'font-lock-string-face "yellow3")               ; 文字列
-(set-face-foreground 'font-lock-function-name-face "SkyBlue2")       ; 関数名
-(set-face-foreground 'font-lock-keyword-face "salmon1")              ; キーワード
-(set-face-foreground 'font-lock-constant-face "DarkGreen")           ; 定数
+(set-foreground-color "#203020")                                    ; 文字色
+(set-background-color "OliveDrab")                                  ; 背景色
+(add-to-list 'default-frame-alist '(cursor-color . "Red"))          ; カーソル色
+(set-face-background 'region "MediumPurple")                        ; リージョン
+(set-face-foreground 'modeline "honeydew3")                         ; モードライン文字
+(set-face-background 'modeline "#496B22")                           ; モードライン背景
+(set-face-foreground 'mode-line-inactive "DarkGreen")               ; モードライン文字(非アクティブ)
+(set-face-background 'mode-line-inactive "OliveDrab")               ; モードライン背景(非アクティブ)
+(set-face-foreground 'font-lock-comment-delimiter-face "honeydew3") ; コメントデリミタ
+(set-face-foreground 'font-lock-comment-face "honeydew3")           ; コメント
+(set-face-foreground 'font-lock-string-face "#990000")              ; 文字列
+(set-face-foreground 'font-lock-function-name-face "#B000FF")       ; 関数名
+(set-face-foreground 'font-lock-keyword-face "#FFBF00")             ; キーワード
+(set-face-foreground 'font-lock-constant-face "DarkGreen")          ; 定数
 
 
 ;;
@@ -156,8 +156,6 @@
 
 ;; Delete trailing whitespace before saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; mode line
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -377,7 +375,7 @@ The current implementation checks
 ;; highlight current buffer
 ;; http://ksugita.blog62.fc2.com/blog-entry-8.html
 (load-file "~/.emacs.d/site-lisp/hiwin.el")
-(setq hiwin-color "OliveDrab")
+(setq hiwin-color "#496B22")
 (hiwin-mode)
 
 
@@ -694,109 +692,6 @@ The current implementation checks
 
 
 ;;
-;; Flymake
-;;______________________________________________________________________
-
-(require 'flymake)
-
-;; http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
-(require 'set-perl5lib)
-
-;; Error＆Warning色設定
-(set-face-background 'flymake-errline "red4")
-(set-face-foreground 'flymake-errline "white")
-(set-face-background 'flymake-warnline "yellow")
-(set-face-foreground 'flymake-warnline "black")
-
-;; エラーメッセージを見にバッファに表示
-;; http://d.hatena.ne.jp/xcezx/20080314/1205475020
-(defun flymake-display-err-minibuf ()
-  "Displays the error/warning for the current line in the minibuffer"
-  (interactive)
-  (let* ((line-no             (flymake-current-line-no))
-         (line-err-info-list  (nth 0 (flymake-find-err-info
-                                      flymake-err-info line-no)))
-         (count               (length line-err-info-list)))
-    (while (> count 0)
-      (when line-err-info-list
-        (let* ((file       (flymake-ler-file
-                            (nth (1- count) line-err-info-list)))
-               (full-file  (flymake-ler-full-file
-                            (nth (1- count) line-err-info-list)))
-               (text       (flymake-ler-text
-                            (nth (1- count) line-err-info-list)))
-               (line       (flymake-ler-line
-                            (nth (1- count) line-err-info-list))))
-          (message "[%s] %s" line text)))
-      (setq count (1- count)))))
-(global-set-key "\C-cd" 'flymake-display-err-minibuf)
-
-;; PHP用設定
-(when (not (fboundp 'flymake-php-init))
-  ;; flymake-php-initが未定義のバージョンだったら、自分で定義する
-  (defun flymake-php-init ()
-    (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                         'flymake-create-temp-inplace))
-           (local-file  (file-relative-name
-                         temp-file
-                         (file-name-directory buffer-file-name))))
-      (list "php" (list "-f" local-file "-l"))))
-  (setq flymake-allowed-file-name-masks
-        (append
-         flymake-allowed-file-name-masks
-         '(("\\.php[345]?$" flymake-php-init))))
-  (setq flymake-err-line-patterns
-        (cons
-         '("\\(\\(?:Parse error\\|Fatal error\\|Warning\\): .*\\) in \\(.*\\) on line \\([0-9]+\\)" 2 3 nil 1)
-         flymake-err-line-patterns)))
-(add-hook 'php-mode-hook
-          '(lambda() (flymake-mode t)))
-
-;; for C
-;; (defun flymake-c-init ()
-;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;          (local-file  (file-relative-name
-;;                        temp-file
-;;                        (file-name-directory buffer-file-name))))
-;;     (list "gcc"
-;;           (list "-Wall" "-Wextra" "-fsyntax-only" local-file))))
-;; (push '("\\.h$" flymake-cc-init) flymake-allowed-file-name-masks)
-;; (push '("\\.c$" flymake-cc-init) flymake-allowed-file-name-masks)
-;; (add-hook 'c-mode-hook
-;;           '(lambda ()
-;;              (flymake-mode t)))
-
-;; ;; for Perl
-;; ;; http://unknownplace.org/memo/2007/12/21#e001
-;; (defvar flymake-perl-err-line-patterns
-;;   '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
-;; (defconst flymake-allowed-perl-file-name-masks
-;;   '(("\\.pl$" flymake-perl-init)
-;;     ("\\.pm$" flymake-perl-init)
-;;     ("\\.t$" flymake-perl-init)))
-;; (defun flymake-perl-init ()
-;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                      'flymake-create-temp-inplace))
-;;          (local-file (file-relative-name
-;;                       temp-file
-;;                       (file-name-directory buffer-file-name))))
-;;     (list "perl" (list "-wc" local-file))))
-;; (defun flymake-perl-load ()
-;;   (interactive)
-;;   (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
-;;     (setq flymake-check-was-interrupted t))
-;;   (ad-activate 'flymake-post-syntax-check)
-;;   (setq flymake-allowed-file-name-masks
-;;         (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
-;;   (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
-;;   (set-perl5lib)
-;;   (flymake-mode t))
-
-;; (add-hook 'cperl-mode-hook 'flymake-perl-load)
-
-
-;;
 ;; gtags
 ;;______________________________________________________________________
 
@@ -895,8 +790,9 @@ The current implementation checks
 ;;______________________________________________________________________
 
 ; 下の方に置かないとうまくいかない
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+
 (require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 (global-set-key (kbd "M-_") 'auto-complete)
 (setq ac-auto-start 1)       ; 補完を開始する文字数
