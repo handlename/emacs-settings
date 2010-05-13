@@ -66,24 +66,43 @@
       (setq ns-pop-up-frames nil)
       ))
 
-(set-foreground-color "#AACF70")                               ; 文字色
-(set-background-color "#395B22")                               ; 背景色
-(set-cursor-color "#990000")                                   ; カーソル色
-(set-face-background 'region "#33108B")                        ; リージョン
-(set-face-foreground 'modeline "gray")                         ; モードライン文字
-(set-face-background 'modeline "#102010")                      ; モードライン背景
-(set-face-foreground 'mode-line-inactive "gray")               ; モードライン文字(非アクティブ)
-(set-face-background 'mode-line-inactive "#496B22")            ; モードライン背景(非アクティブ)
-(set-face-foreground 'font-lock-comment-delimiter-face "gray") ; コメントデリミタ
-(set-face-foreground 'font-lock-comment-face "gray")           ; コメント
-(set-face-foreground 'font-lock-string-face "#A0A030")         ; 文字列
-(set-face-foreground 'font-lock-function-name-face "#CAAF00")  ; 関数名
-(set-face-foreground 'font-lock-keyword-face "#AACF00")        ; キーワード
-(set-face-foreground 'font-lock-constant-face "#60B060")       ; 定数
-(set-face-foreground 'font-lock-variable-name-face "#AAAE00")  ; 変数
-(set-face-foreground 'font-lock-type-face "#CAAE90")           ; クラス
-(set-face-foreground 'fringe "gray")                           ; fringe(折り返し記号なでが出る部分)
-(set-face-background 'fringe "#395B22")                        ; fringe
+
+;;
+;; Color
+;;______________________________________________________________________
+
+(set-foreground-color                                  "#333333") ; 文字色
+(set-background-color                                  "#EEEEEE") ; 背景色
+(set-cursor-color                                      "#FF69B4") ; カーソル色
+(set-face-background 'region                           "#B0C4DE") ; リージョン
+(set-face-foreground 'modeline                         "#EEEEEE") ; モードライン文字
+(set-face-background 'modeline                         "#333333") ; モードライン背景
+(set-face-foreground 'mode-line-inactive               "#EEEEEE") ; モードライン文字(非アクティブ)
+(set-face-background 'mode-line-inactive               "#888888") ; モードライン背景(非アクティブ)
+(set-face-foreground 'font-lock-comment-delimiter-face "#888888") ; コメントデリミタ
+(set-face-foreground 'font-lock-comment-face           "#888888") ; コメント
+(set-face-foreground 'font-lock-string-face            "#808000") ; 文字列
+(set-face-foreground 'font-lock-function-name-face     "#006400") ; 関数名
+(set-face-foreground 'font-lock-keyword-face           "#FF4C00") ; キーワード
+(set-face-foreground 'font-lock-constant-face          "#800000") ; 定数(this, selfなども)
+(set-face-foreground 'font-lock-variable-name-face     "#4169E1") ; 変数
+(set-face-foreground 'font-lock-type-face              "#0000CD") ; クラス
+(set-face-foreground 'fringe                           "#C0C0C0") ; fringe(折り返し記号なでが出る部分)
+(set-face-background 'fringe                           "#EEEEEE") ; fringe
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (set-face-foreground 'org-level-3 "#000080")
+             (set-face-foreground 'org-level-4 "#227722")
+             (set-face-foreground 'org-hide "#EEEEEE")
+             (set-face-foreground 'org-done "#EEEEEE")
+             (set-face-background 'org-done "#328832")
+             (set-face-foreground 'org-todo "#EEEEEE")
+             (set-face-background 'org-todo "#FF0000")))
+
+(add-hook 'mmm-mode-hook
+          '(lambda ()
+             (set-face-background 'mmm-default-submode-face "#E5E5E5")))
 
 
 ;;
@@ -371,7 +390,7 @@ The current implementation checks
 (require 'highlight-current-line)
 (highlight-current-line-on t)
 ;(set-face-background 'highlight-current-line-face "#597B32")
-(set-face-background 'highlight-current-line-face "#102010")
+(set-face-background 'highlight-current-line-face "#FFFFFF")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -614,8 +633,7 @@ The current implementation checks
           '(lambda ()
              (setq org-log-done t)
              (setq org-tags-column 60)
-             (setq org-hide-leading-stars t)
-             (set-face-foreground 'org-hide "#395B22")))
+             (setq org-hide-leading-stars t)))
 
 
 ;;
@@ -732,7 +750,6 @@ The current implementation checks
 
 (require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
-(set-face-background 'mmm-default-submode-face "#395B12")
 
 ;; Setting from http://www.bookshelf.jp/soft/meadow_13.html#SEC101
 
@@ -824,7 +841,7 @@ The current implementation checks
 (global-set-key (kbd "M-_") 'auto-complete)
 (setq ac-auto-start 1)       ; 補完を開始する文字数
 (setq ac-auto-show-menu 0.2) ; 補完リストが表示されるまでの時間
-(set-face-background 'ac-candidate-face "lightyellow")
+;(set-face-background 'ac-candidate-face "lightyellow")
 (setq ac-sources '(ac-source-yasnippet
                    ac-source-dictionary
                    ac-source-filename
