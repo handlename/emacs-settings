@@ -1,0 +1,9 @@
+*.elc
+#*
+*~
+/ac-comphist.dat
+/anything-c-adaptive-history
+/completions
+/tramp
+/tutorial
+
