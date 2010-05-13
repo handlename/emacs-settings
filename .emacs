@@ -67,9 +67,9 @@
       ))
 
 (set-foreground-color "#AACF70")                               ; 文字色
-(set-background-color "#496B22")                               ; 背景色
-(add-to-list 'default-frame-alist '(cursor-color . "Red"))     ; カーソル色
-(set-face-background 'region "MediumPurple")                   ; リージョン
+(set-background-color "#395B22")                               ; 背景色
+(set-cursor-color "#990000")                                   ; カーソル色
+(set-face-background 'region "#33108B")                        ; リージョン
 (set-face-foreground 'modeline "gray")                         ; モードライン文字
 (set-face-background 'modeline "#102010")                      ; モードライン背景
 (set-face-foreground 'mode-line-inactive "gray")               ; モードライン文字(非アクティブ)
@@ -83,7 +83,7 @@
 (set-face-foreground 'font-lock-variable-name-face "#AAAE00")  ; 変数
 (set-face-foreground 'font-lock-type-face "#CAAE90")           ; クラス
 (set-face-foreground 'fringe "gray")                           ; fringe(折り返し記号なでが出る部分)
-(set-face-background 'fringe "#597B32")                        ; fringe
+(set-face-background 'fringe "#395B22")                        ; fringe
 
 
 ;;
@@ -163,7 +163,6 @@
 ;; 行番号表示
 (global-linum-mode)
 (setq linum-format "%5d")
-(setq linum-
 
 ;; スタートページ非表示
 (setq inhibit-startup-message t)
@@ -371,7 +370,8 @@ The current implementation checks
 ;; highlight current line
 (require 'highlight-current-line)
 (highlight-current-line-on t)
-(set-face-background 'highlight-current-line-face "#597B32")
+;(set-face-background 'highlight-current-line-face "#597B32")
+(set-face-background 'highlight-current-line-face "#102010")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -386,9 +386,9 @@ The current implementation checks
 
 ;; highlight current buffer
 ;; http://ksugita.blog62.fc2.com/blog-entry-8.html
-(load-file "~/.emacs.d/site-lisp/hiwin.el")
-(setq hiwin-color "#496B22")
-(hiwin-mode)
+;; (load-file "~/.emacs.d/site-lisp/hiwin.el")
+;; (setq hiwin-color "#496B22")
+;; (hiwin-mode)
 
 
 ;;
@@ -610,6 +610,12 @@ The current implementation checks
 ;;______________________________________________________________________
 
 (require 'org-install)
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (setq org-log-done t)
+             (setq org-tags-column 60)
+             (setq org-hide-leading-stars t)
+             (set-face-foreground 'org-hide "#395B22")))
 
 
 ;;
@@ -650,7 +656,9 @@ The current implementation checks
 ;; text-mode
 ;;______________________________________________________________________
 
-(define-key text-mode-map (kbd "C-i") 'self-insert-command)
+(add-hook 'text-mode-hook
+          '(lambda ()
+             (setq tab-width 4)))
 
 
 ;;
