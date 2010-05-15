@@ -636,6 +636,13 @@ The current implementation checks
 
 
 ;;
+;; markdown-mode
+;;______________________________________________________________________
+
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+
+;;
 ;; org-mode
 ;;______________________________________________________________________
 
