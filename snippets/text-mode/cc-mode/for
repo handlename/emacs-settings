@@ -1,6 +1,6 @@
-#name : for (...; ...; ...) { ... }
+# -*- mode: snippet -*-
+# name: for(...) { ... }
 # --
-for (${1:int i = 0}; ${2:i < N}; ${3:++i})
-{
-    $0
+for(${1:var} = 0; $1 < ${2:expression}; ++$1) {
+    $3
 }

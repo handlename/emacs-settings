@@ -39,29 +39,11 @@
       (setq line-spacing 0.2)              ; 行間
       (when (>= emacs-major-version 23)
         (tool-bar-mode nil)
-        (set-face-attribute 'default nil
-                            :family "M+2VM+IPAG circle"
-                            :height 140)
         (set-fontset-font
          (frame-parameter nil 'font)
          'japanese-jisx0208
          '("M+2VM+IPAG circle" . "iso10646-1"))
-        (set-fontset-font
-         (frame-parameter nil 'font)
-         'japanese-jisx0212
-         '("M+2VM+IPAG circle" . "iso10646-1"))
-        (set-fontset-font
-         (frame-parameter nil 'font)
-         'mule-unicode-0100-24ff
-         '("M+2VM+IPAG circle" . "iso10646-1"))
-        (setq face-font-rescale-alist
-              '(("^-apple-hiragino.*"                . 1.3)
-                (".*osaka-bold.*"                    . 1.2)
-                (".*osaka-medium.*"                  . 1.2)
-                (".*courier-bold-.*-mac-roman"       . 1.0)
-                (".*monaco cy-bold-.*-mac-cyrillic"  . 0.9)
-                (".*monaco-bold-.*-mac-roman"        . 0.9)
-                ("-cdac$"                            . 1.3))))
+	)
       ;(ns-toggle-fullscreen)
       (setq ns-pop-up-frames nil)
       ))
@@ -71,38 +53,38 @@
 ;; Color
 ;;______________________________________________________________________
 
-(set-foreground-color                                  "#333333") ; 文字色
-(set-background-color                                  "#EEEEEE") ; 背景色
-(set-cursor-color                                      "#FF69B4") ; カーソル色
-(set-face-background 'region                           "#B0C4DE") ; リージョン
-(set-face-foreground 'modeline                         "#EEEEEE") ; モードライン文字
+(set-foreground-color                                  "#CCCCCC") ; 文字色
+(set-background-color                                  "#333333") ; 背景色
+(set-cursor-color                                      "#FF0000") ; カーソル色
+(set-face-background 'region                           "#222244") ; リージョン
+(set-face-foreground 'modeline                         "#CCCCCC") ; モードライン文字
 (set-face-background 'modeline                         "#333333") ; モードライン背景
-(set-face-foreground 'mode-line-inactive               "#EEEEEE") ; モードライン文字(非アクティブ)
-(set-face-background 'mode-line-inactive               "#888888") ; モードライン背景(非アクティブ)
+(set-face-foreground 'mode-line-inactive               "#333333") ; モードライン文字(非アクティブ)
+(set-face-background 'mode-line-inactive               "#CCCCCC") ; モードライン背景(非アクティブ)
 (set-face-foreground 'font-lock-comment-delimiter-face "#888888") ; コメントデリミタ
 (set-face-foreground 'font-lock-comment-face           "#888888") ; コメント
-(set-face-foreground 'font-lock-string-face            "#808000") ; 文字列
-(set-face-foreground 'font-lock-function-name-face     "#006400") ; 関数名
-(set-face-foreground 'font-lock-keyword-face           "#FF4C00") ; キーワード
-(set-face-foreground 'font-lock-constant-face          "#800000") ; 定数(this, selfなども)
-(set-face-foreground 'font-lock-variable-name-face     "#4169E1") ; 変数
-(set-face-foreground 'font-lock-type-face              "#0000CD") ; クラス
-(set-face-foreground 'fringe                           "#C0C0C0") ; fringe(折り返し記号なでが出る部分)
-(set-face-background 'fringe                           "#EEEEEE") ; fringe
+(set-face-foreground 'font-lock-string-face            "#7FFF7F") ; 文字列
+(set-face-foreground 'font-lock-function-name-face     "#BF7FFF") ; 関数名
+(set-face-foreground 'font-lock-keyword-face           "#FF7F7F") ; キーワード
+(set-face-foreground 'font-lock-constant-face          "#FFBF7F") ; 定数(this, selfなども)
+(set-face-foreground 'font-lock-variable-name-face     "#7F7FFF") ; 変数
+(set-face-foreground 'font-lock-type-face              "#FFFF7F") ; クラス
+(set-face-foreground 'fringe                           "#666666") ; fringe(折り返し記号なでが出る部分)
+(set-face-background 'fringe                           "#282828") ; fringe
 
 (add-hook 'org-mode-hook
           '(lambda ()
-             (set-face-foreground 'org-level-3 "#000080")
-             (set-face-foreground 'org-level-4 "#227722")
-             (set-face-foreground 'org-hide "#EEEEEE")
-             (set-face-foreground 'org-done "#EEEEEE")
-             (set-face-background 'org-done "#328832")
-             (set-face-foreground 'org-todo "#EEEEEE")
-             (set-face-background 'org-todo "#FF0000")))
+             (set-face-foreground 'org-hide "#282828")))
 
 (add-hook 'mmm-mode-hook
           '(lambda ()
-             (set-face-background 'mmm-default-submode-face "#E5E5E5")))
+             (set-face-background 'mmm-default-submode-face "#404040")))
+
+(add-hook 'linum-mode-hook
+          '(lambda ()
+             (set-face-foreground 'linum "#666666")
+             (set-face-background 'linum "#282828")))
+
 
 
 ;;
@@ -181,7 +163,7 @@
 
 ;; 行番号表示
 (global-linum-mode)
-(setq linum-format "%5d")
+(setq linum-format "%4d")
 
 ;; スタートページ非表示
 (setq inhibit-startup-message t)
@@ -419,8 +401,7 @@ The current implementation checks
 ;; highlight current line
 (require 'highlight-current-line)
 (highlight-current-line-on t)
-;(set-face-background 'highlight-current-line-face "#597B32")
-(set-face-background 'highlight-current-line-face "#FFFFFF")
+(set-face-background 'highlight-current-line-face "#282828")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -658,6 +639,14 @@ The current implementation checks
 ;; org-mode
 ;;______________________________________________________________________
 
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))
+
+;;
+;; org-mode
+;;______________________________________________________________________
+
 (require 'org-install)
 (add-hook 'org-mode-hook
           '(lambda ()
@@ -866,15 +855,14 @@ The current implementation checks
 ; 下の方に置かないとうまくいかない
 
 (require 'auto-complete-config)
+(require 'auto-complete-etags)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 (global-set-key (kbd "M-_") 'auto-complete)
 (setq ac-auto-start 1)       ; 補完を開始する文字数
 (setq ac-auto-show-menu 0.2) ; 補完リストが表示されるまでの時間
-;(set-face-background 'ac-candidate-face "lightyellow")
 (setq ac-sources '(ac-source-yasnippet
                    ac-source-dictionary
-                   ac-source-filename
                    ac-source-gtags
                    ac-source-words-in-buffer))
 
@@ -893,6 +881,21 @@ The current implementation checks
 (add-hook 'yaml-mode-hook
           '(lambda ()
              (setq ac-sources '(ac-source-words-in-buffer))))
+
+; for objc-mode
+(require 'etags-table)
+(add-to-list  'etags-table-alist
+              '("\\.[mh]$" "~/.emacs.d/tags/objc.TAGS"))
+(defvar ac-source-etags-table
+  '((candidates . (lambda ()
+         (all-completions ac-target (tags-completion-table))))
+    (candidate-face . ac-candidate-face)
+    (selection-face . ac-selection-face)
+    (requires . 1))
+  "etags をソースにする")
+(add-hook 'objc-mode-hook
+          (lambda ()
+            (push 'ac-source-etags-table ac-sources)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
