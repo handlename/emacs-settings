@@ -8,9 +8,16 @@
 
 (setq byte-compile-warnings '(free-vars unresolved callargs redefine obsolete noruntime cl-functions interactive-only make-local))
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; General settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;
+;; PATH
+;;______________________________________________________________________
+
+(setq exec-path (cons "/usr/local/bin" exec-path))
 
 ;;
 ;; mail address
@@ -43,7 +50,7 @@
          (frame-parameter nil 'font)
          'japanese-jisx0208
          '("M+2VM+IPAG circle" . "iso10646-1"))
-	)
+    )
       ;(ns-toggle-fullscreen)
       (setq ns-pop-up-frames nil)
       ))
@@ -238,6 +245,20 @@
 
 
 ;;
+;; migemo
+;;______________________________________________________________________
+
+(setq migemo-command "migemo")
+(setq migemo-options '("-t" "emacs"))
+(setq migemo-dictionary "/usr/local/share/migemo/migemo-dict")
+(setq migemo-user-dictionary nil)
+(setq migemo-regex-dictionary nil)
+(setenv "RUBYLIB" "/Library/Ruby/Site/")
+(require 'migemo)
+(migemo-init)
+
+
+;;
 ;; anything
 ;;______________________________________________________________________
 
@@ -246,57 +267,64 @@
 (define-key anything-map (kbd "C-M-n") 'anything-next-source)
 (define-key anything-map (kbd "C-M-p") 'anything-previous-source)
 
-
-;; Don't record histories. If not, anything get error
+;; 履歴を保存するとエラーになるので
 (remove-hook 'kill-emacs-hook 'anything-c-adaptive-save-history)
 (ad-disable-advice 'anything-exit-minibuffer 'before 'anything-c-adaptive-exit-minibuffer)
 (ad-disable-advice 'anything-select-action 'before 'anything-c-adaptive-select-action)
 (setq anything-c-adaptive-history-length 0)
 
-;; Serach for current buffer
-(defun anything-for-occur ()
-  "Search current buffer in anything"
-  (interactive)
-  (anything '(anything-c-source-occur)))
-(define-key global-map (kbd "C-s") 'anything-for-occur)
+;; anything-migemo
+(require 'anything-migemo)
+;(define-key global-map [(control ?:)] 'anything-migemo)
+
+;; バッファ内検索
+(define-key global-map (kbd "C-s")
+  '(lambda ()
+     "Search current buffer in anything"
+     (interactive)
+     (anything '(anything-c-source-occur))))
 
 ;; buffer list + buffer history + files in current directory
-(defun anything-for-buffers ()
-  "Open buffer list in anything"
-  (interactive)
-  (anything '(anything-c-source-buffers
-              anything-c-source-file-name-history
-              anything-c-source-files-in-current-dir)))
-(define-key global-map (kbd "C-x b") 'anything-for-buffers)
+(define-key global-map (kbd "C-x b")
+  (lambda ()
+    "Open buffer list in anything"
+    (interactive)
+    (anything '(anything-c-source-buffers
+                anything-c-source-file-name-history
+                anything-c-source-files-in-current-dir))))
 
 ;; calc
-(defun anything-for-calc ()
-  "Calculate in anything"
-  (interactive)
-  (anything '(anything-c-source-calculation-result)))
-(define-key global-map (kbd "C-M-c") 'anything-for-calc)
+(define-key global-map (kbd "C-c C-a c")
+  (lambda ()
+    "Calculate in anything"
+    (interactive)
+    (anything '(anything-c-source-calculation-result))))
 
 ;; killring history
 (define-key global-map (kbd "C-M-y") 'anything-show-kill-ring)
 
 ;; emacs commands
-(defun anything-for-emacs-commands ()
-  "Execute emacs commands in anything"
-  (interactive)
-  (anything '(anything-c-source-emacs-commands)))
-(define-key global-map (kbd "M-x") 'anything-for-emacs-commands)
+(define-key global-map (kbd "M-x")
+  (lambda ()
+    "Execute emacs commands in anything"
+    (interactive)
+    (anything '(anything-c-source-emacs-commands))))
 
 ;; tag jump
 (require 'anything-etags)
 (require 'anything-gtags)
-(defun anything-etags-and-gtags-select ()
-  "Tag jump using etags, gtags and `anything'."
-  (interactive)
-  (let* ((initial-pattern (regexp-quote (or (thing-at-point 'symbol) ""))))
-    (anything (list anything-c-source-gtags-select
-                    anything-c-source-etags-select))
-    "Find Tag: " nil))
-(define-key global-map (kbd "C-x t") 'anything-etags-and-gtags-select)
+(define-key global-map (kbd "C-x t")
+  (lambda ()
+    "Tag jump using etags, gtags and `anything'."
+    (interactive)
+    (let* ((initial-pattern (regexp-quote (or (thing-at-point 'symbol) ""))))
+      (anything (list anything-c-source-gtags-select
+                      anything-c-source-etags-select))
+      "Find Tag: " nil)))
+
+;; anything-hatena-bookmark
+(require 'anything-hatena-bookmark)
+(define-key global-map (kbd "C-c C-a b") 'anything-hatena-bookmark)
 
 
 ;;
@@ -367,18 +395,18 @@ The current implementation checks
 ;; migemoがrequireできる環境ならmigemoを使う
 (when (require 'migemo nil t) ;第三引数がnon-nilだとloadできなかった場合にエラーではなくnilを返す
   (setq moccur-use-migemo t))
-
 ;;; anything-c-moccurの設定
 (require 'anything-c-moccur)
 ;; カスタマイズ可能変数の設定(M-x customize-group anything-c-moccur でも設定可能)
-(setq anything-c-moccur-anything-idle-delay 0.2 ;`anything-idle-delay'
-      anything-c-moccur-higligt-info-line-flag t ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
-      anything-c-moccur-enable-auto-look-flag t ; 現在選択中の候補の位置を他のwindowに表示する
-      anything-c-moccur-enable-initial-pattern t) ; `anything-c-moccur-occur-by-moccur'の起動時にポイントの位置の単語を初期パターンにする
+(setq anything-c-moccur-anything-idle-delay 0.2    ; `anything-idle-delay'
+      anything-c-moccur-enable-initial-pattern nil ; はじめからカーソル位置のパターンが入力されるのを抑止
+      anything-c-moccur-higligt-info-line-flag t   ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
+      anything-c-moccur-enable-auto-look-flag t    ; 現在選択中の候補の位置を他のwindowに表示する
+      anything-c-moccur-enable-initial-pattern t)  ; `anything-c-moccur-occur-by-moccur'の起動時にポイントの位置の単語を初期パターンにする
 
 ;;; キーバインドの割当(好みに合わせて設定してください)
 (global-set-key (kbd "C-S-s") 'anything-c-moccur-occur-by-moccur) ;バッファ内検索
-(global-set-key (kbd "C-M-s") 'anything-c-moccur-dmoccur) ;ディレクトリ
+(global-set-key (kbd "C-c C-a S") 'anything-c-moccur-dmoccur) ;ディレクトリ
 (add-hook 'dired-mode-hook ;dired
           '(lambda ()
              (local-set-key (kbd "O") 'anything-c-moccur-dired-do-moccur-by-moccur)))
@@ -643,12 +671,55 @@ The current implementation checks
   "Major mode for editing Markdown files" t)
 
 ;;
-;; org-mode
+;; objc-mode
 ;;______________________________________________________________________
 
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))
+
+;; Xcode上でコンパイル＆実行
+(defun xcode-buildandrun ()
+ (interactive)
+ (do-applescript
+  (format
+   (concat
+    "tell application \"Xcode\" to activate \r"
+    "tell application \"System Events\" \r"
+    "     tell process \"Xcode\" \r"
+    "          key code 36 using {command down} \r"
+    "    end tell \r"
+    "end tell \r"
+    ))))
+
+;; Xcodeにブレークポイント追加
+;; http://d.hatena.ne.jp/kaniza/20090915/p1
+(defun xcode-add-breakpoint-at-line ()
+  (interactive)
+  (let ((line (number-to-string (line-number-at-pos)))
+        (file-path buffer-file-name))
+    (do-applescript (concat
+     "tell application \"Xcode\"
+        activate
+        tell front project
+          repeat with r in file references
+            set p to full path of r
+            if \"" file-path "\" = p then
+              set bp to make new file breakpoint with properties {line number:" line "}
+              set file reference of bp to r
+              set enabled of bp to true
+              exit repeat
+            end if
+         end repeat
+       end tell
+     end tell"))))
+
+(add-hook 'objc-mode-hook
+          (lambda ()
+            (define-key objc-mode-map (kbd "C-c C-r") 'xcode-buildandrun)
+            (define-key objc-mode-map (kbd "C-c C-b") 'xcode-add-breakpoint-at-line)
+            ))
+
 
 ;;
 ;; org-mode
@@ -755,6 +826,37 @@ The current implementation checks
 
 
 ;;
+;; flymake-mode
+;;______________________________________________________________________
+
+(require 'flymake)
+
+;; GUIの警告は表示しない
+(setq flymake-gui-warnings-enabled nil)
+
+;; 全てのファイルで flymakeを有効化
+(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+;; エラーメッセージをポップアップ表示
+(defun my-flymake-display-err-popup.el-for-current-line ()
+  "Display a menu with errors/warnings for current line if it has errors and/or warnings."
+  (interactive)
+  (let* ((line-no            (flymake-current-line-no))
+         (line-err-info-list (nth 0 (flymake-find-err-info flymake-err-info line-no)))
+         (menu-data          (flymake-make-err-menu-data line-no line-err-info-list)))
+    (if menu-data
+      (popup-tip (mapconcat '(lambda (e) (nth 0 e))
+                            (nth 1 menu-data)
+                            "\n")))
+    ))
+
+;; キーバインド
+(global-set-key "\M-p" 'flymake-goto-prev-error)
+(global-set-key "\M-n" 'flymake-goto-next-error)
+(global-set-key "\C-cd" 'my-flymake-display-err-popup.el-for-current-line)
+
+
+;;
 ;; gtags
 ;;______________________________________________________________________
 
@@ -781,31 +883,32 @@ The current implementation checks
 
 ;; html + css
 (mmm-add-classes
- '((mmm-css-in-html
+ '((mmm-css
     :submode css-mode
     :front "<style[^>]*>"
     :back "</style>")))
-(mmm-add-mode-ext-class nil "\\.html?\\'" 'mmm-css-in-html)
+(mmm-add-mode-ext-class nil "\\.html?\\'" 'mmm-css)
 
 ;; html + js
 (mmm-add-classes
- '((mmm-js-in-html
+ '((mmm-js
     :submode js-mode
     :front "<script[^>]*>[^<]"
     :front-offset -1
     :back "\n?[ \t]*</script>")))
-(mmm-add-mode-ext-class nil "\\.html?\\'" 'mmm-js-in-html)
+(mmm-add-mode-ext-class nil "\\.html?\\'" 'mmm-js)
 
 ;; php + html + js + css
 ;;(add-to-list 'auto-mode-alist '("\\.php?\\'" . html-helper-mode))
 (mmm-add-classes
- '((mmm-php-in-html
+ '((mmm-php
     :submode php-mode
     :front "<\\?\\(php\\)?"
     :back "\\?>")))
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'mmm-php-in-html)
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'mmm-css-in-html)
-(mmm-add-mode-ext-class nil "\\.php?\\'" 'mmm-js-in-html)
+;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-php-in-html)
+;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-css-in-html)
+;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-js-in-html)
+(mmm-add-mode-ext-class nil "\\.yml\\'" 'mmm-php)
 ;; インデントが効かなくなるのを解消
 (defun save-mmm-c-locals ()
   (with-temp-buffer
