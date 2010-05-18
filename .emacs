@@ -46,14 +46,14 @@
       (setq line-spacing 0.2)              ; 行間
       (when (>= emacs-major-version 23)
         (tool-bar-mode nil)
+        (set-face-attribute 'default nil
+                            :family "M+2VM+IPAG circle"
+                            :height 140)
         (set-fontset-font
          (frame-parameter nil 'font)
          'japanese-jisx0208
-         '("M+2VM+IPAG circle" . "iso10646-1"))
-    )
-      ;(ns-toggle-fullscreen)
-      (setq ns-pop-up-frames nil)
-      ))
+         '("M+2VM+IPAG circle" . "iso10646-1")))
+      (setq ns-pop-up-frames nil)))
 
 
 ;;
