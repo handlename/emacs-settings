@@ -49,8 +49,9 @@
         (set-frame-font "Menlo-12")
         (set-fontset-font (frame-parameter nil 'font)
                           'japanese-jisx0208
-                          (font-spec :family "M+2VM+IPAG circle" :size 15)))
-  (setq ns-pop-up-frames nil)))
+                          (font-spec :family "M+2VM+IPAG circle" :size 14)))
+      (setq ns-pop-up-frames nil)))
+
 
 ;;
 ;; Color
@@ -120,16 +121,15 @@
 (global-set-key (kbd "C-M-r")   'replace-regexp)
 (global-set-key (kbd "C-r")     'replace-string)
 (global-set-key (kbd "C-/")     'undo)
+(global-set-key (kbd "C-x C-s") 'delete-trailing-whitespace)
 
 
 ;;
 ;; backup file
 ;;______________________________________________________________________
 
-(defun make-backup-file-name (filename)
-  (expand-file-name
-   (concat "~/.backup/" (file-name-nondirectory filename) "~")
-   (file-name-directory filename)))
+;; 残さない
+(setq make-backup-files nil)
 
 
 ;;
@@ -160,9 +160,6 @@
 
 ;; Narrowing
 (put 'narrow-to-region 'disabled nil)
-
-;; Delete trailing whitespace before saving
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; 行番号表示
 (global-linum-mode)
@@ -238,6 +235,14 @@
                (regexp . "\\(\\s-*\\)# => [^#\t\n]")
                (repeat . nil)
                (modes  . '(ruby-mode))))
+
+
+;;
+;; auto-save-buffers
+;;______________________________________________________________________
+
+(require 'auto-save-buffers)
+(run-with-idle-timer 0.5 t 'auto-save-buffers)
 
 
 ;;
@@ -520,6 +525,9 @@ The current implementation checks
 (yas/initialize)
 (setq yas/root-directory "~/.emacs.d/snippets")
 (yas/load-directory yas/root-directory)
+
+(set-face-background 'yas/field-highlight-face "#404040")
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; major mode settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -834,7 +842,7 @@ The current implementation checks
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 ;; エラーメッセージをポップアップ表示
-(defun my-flymake-display-err-popup.el-for-current-line ()
+(defun flymake-popup-err-message ()
   "Display a menu with errors/warnings for current line if it has errors and/or warnings."
   (interactive)
   (let* ((line-no            (flymake-current-line-no))
@@ -845,12 +853,44 @@ The current implementation checks
                             (nth 1 menu-data)
                             "\n")))
     ))
+;; ;; カーソルをエラー行に載せるとエラーメッセージをポップアップ表示
+;; ;; anythingと干渉するようなのでコメントアウト 
+;; (defadvice flymake-mode (before post-command-stuff activate compile)
+;;   "エラー行にカーソルが当ったら自動的にエラーが minibuffer に表示されるように
+;; post command hook に機能追加"
+;;   (set (make-local-variable 'post-command-hook)
+;;        (add-hook 'post-command-hook 'flymake-popup-err-message)))
 
 ;; キーバインド
 (global-set-key "\M-p" 'flymake-goto-prev-error)
 (global-set-key "\M-n" 'flymake-goto-next-error)
-(global-set-key "\C-cd" 'my-flymake-display-err-popup.el-for-current-line)
+(global-set-key "\C-cd" 'flymake-popup-err-message)
 
+;; Objective-C 用設定
+(defvar xcode:gccver "4.0")
+(defvar xcode:sdkver "3.1.2")
+(defvar xcode:sdkpath "/Developer/Platforms/iPhoneSimulator.platform/Developer")
+(defvar xcode:sdk (concat xcode:sdkpath "/SDKs/iPhoneSimulator" xcode:sdkver ".sdk"))
+(defvar flymake-objc-compiler (concat xcode:sdkpath "/usr/bin/gcc-" xcode:gccver))
+(defvar flymake-objc-compile-default-options (list "-Wall" "-Wextra" "-fsyntax-only" "-ObjC" "-std=c99" "-isysroot" xcode:sdk))
+(defvar flymake-last-position nil)
+(defvar flymake-objc-compile-options '("-I."))
+(defun flymake-objc-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                    'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                     temp-file
+                     (file-name-directory buffer-file-name))))
+     (list flymake-objc-compiler (append flymake-objc-compile-default-options flymake-objc-compile-options (list local-file)))))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           ;; 拡張子 m と h に対して flymake を有効にする設定 flymake-mode t の前に書く必要があります
+           (push '("\\.m$" flymake-objc-init) flymake-allowed-file-name-masks)
+           (push '("\\.h$" flymake-objc-init) flymake-allowed-file-name-masks)
+           ;; 存在するファイルかつ書き込み可能ファイル時のみ flymake-mode を有効にします
+           (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+               (flymake-mode t))))
 
 ;;
 ;; gtags
@@ -922,6 +962,18 @@ The current implementation checks
     :front "<\\?\\(php\\)?"
     :back "\\?>")))
 (mmm-add-mode-ext-class nil "\\.yml?\\'" 'mmm-php-in-yaml)
+
+
+;;
+;; outputz
+;; http://taiyaki.org/elisp/sense-region/
+;;______________________________________________________________________
+
+(require 'outputz)
+(load-file "~/.emacs.d/outputz-pass.el")
+(setq outputz-key outputz-pass)      ;; 復活の呪文
+(setq outputz-uri "http://emacs.curly.local/%s") ;; 適当なURL。%sにmajor-modeの名前が入るので、major-modeごとのURLで投稿できます。
+(global-outputz-mode t)
 
 
 ;;
