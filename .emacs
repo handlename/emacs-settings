@@ -87,7 +87,7 @@
 (add-hook 'linum-mode-hook
           '(lambda ()
              (set-face-foreground 'linum "#666666")
-             (set-face-background 'linum "#282828")))
+             (set-face-background 'linum "#000000")))
 
 
 
@@ -121,7 +121,6 @@
 (global-set-key (kbd "C-M-r")   'replace-regexp)
 (global-set-key (kbd "C-r")     'replace-string)
 (global-set-key (kbd "C-/")     'undo)
-(global-set-key (kbd "C-x C-s") 'delete-trailing-whitespace)
 
 
 ;;
@@ -187,6 +186,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Additional functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;
+;; current-date-string
+;;______________________________________________________________________
+
+(defun current-date-string () (interactive) "現在の日付を挿入する" (insert (format-time-string "%Y-%m-%d")))
+
 
 ;;
 ;; align
@@ -430,7 +437,7 @@ The current implementation checks
 ;; highlight current line
 (require 'highlight-current-line)
 (highlight-current-line-on t)
-(set-face-background 'highlight-current-line-face "#282828")
+(set-face-background 'highlight-current-line-face "#000000")
 
 ;; hilight paren
 (show-paren-mode 1)
@@ -754,11 +761,38 @@ The current implementation checks
 (add-hook 'php-mode-hook 'pear/php-mode-init)
 (add-hook 'php-mode-hook
           '(lambda ()
+             (c-set-style "stroustrup")
              (setq php-manual-path "/usr/share/doc/php/html")
              (setq php-search-url  "http://www.phppro.jp/")
              (setq php-manual-url  "http://www.phppro.jp/phpmanual")
              (setq tab-width 4)
-             (setq c-basic-offset 4)))
+            ))
+
+;; php-eval.el
+;; http://www.ne.jp/asahi/alpha/kazu/pub/emacs/php-eval.el
+(require 'php-eval)
+
+; リージョン内のコード(<?php ?>がなくてもOK)を評価
+; http://d.hatena.ne.jp/kitokitoki/20100605/p1
+(defun my-php-eval-region ()
+  (interactive)
+  (when (region-active-p)
+    (let ((region-str (buffer-substring-no-properties (region-beginning) (region-end)))
+          (result-buf "*php*")
+          (temp-file "/tmp/hoge.php"))
+      (with-temp-file temp-file
+        (insert "<?php \n" region-str))
+      (shell-command (concat "php " temp-file) result-buf)
+      (view-buffer-other-window result-buf t
+                                (lambda (buf)
+                                  (kill-buffer-and-window)
+                                  (delete-file temp-file))))))
+
+(eval-after-load 'php-eval
+  '(progn
+    (define-key php-mode-map (kbd "C-c C-r C-r") 'my-php-eval-region)
+    (define-key php-mode-map (kbd "C-c C-r C-v") 'php-eval-display-buffer)
+    ))
 
 
 ;;
@@ -867,7 +901,7 @@ The current implementation checks
 (global-set-key "\C-cd" 'flymake-popup-err-message)
 
 ;; Objective-C 用設定
-(defvar xcode:gccver "4.0")
+(defvar xcode:gccver "4.2.1")
 (defvar xcode:sdkver "3.1.2")
 (defvar xcode:sdkpath "/Developer/Platforms/iPhoneSimulator.platform/Developer")
 (defvar xcode:sdk (concat xcode:sdkpath "/SDKs/iPhoneSimulator" xcode:sdkver ".sdk"))
@@ -963,6 +997,18 @@ The current implementation checks
     :back "\\?>")))
 (mmm-add-mode-ext-class nil "\\.yml?\\'" 'mmm-php-in-yaml)
 
+
+;;
+;; hs-minor-mode
+;;______________________________________________________________________
+
+(load-library "hideshow")
+(add-hook 'java-mode-hook 'hs-minor-mode)
+(add-hook 'perl-mode-hook 'hs-minor-mode)
+(add-hook 'php-mode-hook 'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+
+(define-key hs-minor-mode-map (kbd "C-c C-h t") 'hs-toggle-hiding)
 
 ;;
 ;; outputz
