@@ -173,6 +173,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;
+;; current-date-string
+;;______________________________________________________________________
+
+(defun current-date-string () (interactive) "現在の日付を挿入する" (insert (format-time-string "%Y-%m-%d")))
+
+
+;;
 ;; kill-all-buffers
 ;;______________________________________________________________________
 
@@ -182,18 +189,9 @@
         do (kill-buffer buffer)))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Additional functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;
-;; current-date-string
-;;______________________________________________________________________
-
-(defun current-date-string () (interactive) "現在の日付を挿入する" (insert (format-time-string "%Y-%m-%d")))
-
 
 ;;
 ;; align
@@ -226,7 +224,7 @@
              '(ruby-comma-delimiter
                (regexp . ",\\(\\s-*\\)[^# \t\n]")
                (repeat . t)
-               (modes  . '(ruby-mode))))
+               (modes  . '(ruy-mode))))
 (add-to-list 'align-rules-list
              '(ruby-hash-literal
                (regexp . "\\(\\s-*\\)=>\\s-*[^# \t\n]")
@@ -249,7 +247,15 @@
 ;;______________________________________________________________________
 
 (require 'auto-save-buffers)
-(run-with-idle-timer 0.5 t 'auto-save-buffers)
+(run-with-idle-timer 5.0 t 'auto-save-buffers)
+
+
+;;
+;; auto-save-buffers
+;;______________________________________________________________________
+
+(cua-mode t)
+(setq cua-enable-cua-keys nil)
 
 
 ;;
@@ -752,12 +758,12 @@ The current implementation checks
 (autoload 'php-mode "php-mode")
 ;; (setq auto-mode-alist
 ;;       (cons '("\\.php\\'" . php-mode) auto-mode-alist))
-(setq php-mode-force-pear)
+(setq php-mode-force-pear t)
 (defun pear/php-mode-init()
   "Set some buffer-local variables."
   (setq case-fold-search t)
   (c-set-offset 'arglist-intro '+)
-  (c-set-offset 'arglist-close '0))
+  (c-set-offset 'arglist-close 0))
 (add-hook 'php-mode-hook 'pear/php-mode-init)
 (add-hook 'php-mode-hook
           '(lambda ()
@@ -765,8 +771,7 @@ The current implementation checks
              (setq php-manual-path "/usr/share/doc/php/html")
              (setq php-search-url  "http://www.phppro.jp/")
              (setq php-manual-url  "http://www.phppro.jp/phpmanual")
-             (setq tab-width 4)
-            ))
+             (setq tab-width 4)))
 
 ;; php-eval.el
 ;; http://www.ne.jp/asahi/alpha/kazu/pub/emacs/php-eval.el
@@ -811,7 +816,8 @@ The current implementation checks
 
 (add-hook 'text-mode-hook
           '(lambda ()
-             (setq tab-width 4)))
+             (setq tab-width 4)
+             (setq c-basic-offset 4)))
 
 
 ;;
@@ -828,7 +834,7 @@ The current implementation checks
 
 
 ;;
-;; yatex-mode
+;; yaml-mode
 ;;______________________________________________________________________
 
 (require 'yaml-mode)
@@ -968,26 +974,26 @@ The current implementation checks
     :back "\n?[ \t]*</script>")))
 (mmm-add-mode-ext-class nil "\\.html?\\'" 'mmm-js)
 
-;; php + html + js + css
-;;(add-to-list 'auto-mode-alist '("\\.php?\\'" . html-helper-mode))
-(mmm-add-classes
- '((mmm-php
-    :submode php-mode
-    :front "<\\?\\(php\\)?"
-    :back "\\?>")))
-;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-php-in-html)
-;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-css-in-html)
-;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-js-in-html)
-(mmm-add-mode-ext-class nil "\\.yml\\'" 'mmm-php)
-;; インデントが効かなくなるのを解消
-(defun save-mmm-c-locals ()
-  (with-temp-buffer
-    (php-mode)
-    (dolist (v (buffer-local-variables))
-      (when (string-match "\\`c-" (symbol-name (car v)))
-        (add-to-list 'mmm-save-local-variables `(,(car v) nil
-                                                 ,mmm-c-derived-modes))))))
-(save-mmm-c-locals)
+;; ;; php + html + js + css
+;; ;;(add-to-list 'auto-mode-alist '("\\.php?\\'" . html-helper-mode))
+;; (mmm-add-classes
+;;  '((mmm-php
+;;     :submode php-mode
+;;     :front "<\\?\\(php\\)?"
+;;     :back "\\?>")))
+;; ;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-php-in-html)
+;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-css)
+;; ;; (mmm-add-mode-ext-class nil "\\.php\\'" 'mmm-js-in-html)
+;; (mmm-add-mode-ext-class nil "\\.yml\\'" 'mmm-php)
+;; ;; インデントが効かなくなるのを解消
+;; (defun save-mmm-c-locals ()
+;;   (with-temp-buffer
+;;     (php-mode)
+;;     (dolist (v (buffer-local-variables))
+;;       (when (string-match "\\`c-" (symbol-name (car v)))
+;;         (add-to-list 'mmm-save-local-variables `(,(car v) nil
+;;                                                  ,mmm-c-derived-modes))))))
+;; (save-mmm-c-locals)
 
 ;; yaml + php
 (mmm-add-classes
@@ -1008,11 +1014,10 @@ The current implementation checks
 (add-hook 'php-mode-hook 'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
 
-(define-key hs-minor-mode-map (kbd "C-c C-h t") 'hs-toggle-hiding)
+(define-key hs-minor-mode-map (kbd "C-c C-t") 'hs-toggle-hiding)
 
 ;;
 ;; outputz
-;; http://taiyaki.org/elisp/sense-region/
 ;;______________________________________________________________________
 
 (require 'outputz)
