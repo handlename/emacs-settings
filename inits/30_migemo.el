@@ -1,0 +1,8 @@
+(setq migemo-command "migemo")
+(setq migemo-options '("-t" "emacs"))
+(setq migemo-dictionary "/usr/local/share/migemo/migemo-dict")
+(setq migemo-user-dictionary nil)
+(setq migemo-regex-dictionary nil)
+(setenv "RUBYLIB" "/Library/Ruby/Site/")
+(require 'migemo)
+(migemo-init)
