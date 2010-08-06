@@ -1,10 +1,3 @@
-;; 
-;; 
-;; キーバインド
-;; 
-;;
-
-
 (global-set-key (kbd "C-c a")   'align)
 (global-set-key (kbd "C-c M-a") 'align-regexp)
 (global-set-key (kbd "C-h")     'backward-delete-char)

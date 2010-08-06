@@ -17,7 +17,8 @@
              (setq php-manual-path "/usr/share/doc/php/html")
              (setq php-search-url  "http://www.phppro.jp/")
              (setq php-manual-url  "http://www.phppro.jp/phpmanual")
-             (setq tab-width 4)))
+             ;(setq tab-width 4)
+             ))
 
 ;; php-eval.el
 ;; http://www.ne.jp/asahi/alpha/kazu/pub/emacs/php-eval.el

@@ -19,3 +19,9 @@
 ;; (load-file "~/.emacs.d/site-lisp/hiwin.el")
 ;; (setq hiwin-color "#496B22")
 ;; (hiwin-mode)
+
+;; 行末のスペース
+(setq-default show-trailing-whitespace t)
+
+;; 空白行
+(setq-default indicate-empty-line t)
