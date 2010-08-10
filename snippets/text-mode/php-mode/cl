@@ -4,8 +4,7 @@
 /**
  * ${description}
  *
- * @params
- * @return
+ * @author NAGATA Hiroaki
  */
 class ${className}
 {

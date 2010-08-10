@@ -5,7 +5,7 @@
 
 ;; Install elisp
 (require 'install-elisp)
-(setq install-elisp-repository-directory "~/.emacs.d/")
+(setq install-elisp-repository-directory "~/.emacs.d/site-lisp/")
 
 
 ;; sense-region
