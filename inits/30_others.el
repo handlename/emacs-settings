@@ -22,3 +22,14 @@
 
 ;; linum
 (global-linum-mode t)
+
+
+;; 終了前に確認する
+(defadvice save-buffers-kill-emacs
+  (before safe-save-buffers-kill-emacs activate)
+  "safe-save-buffers-kill-emacs"
+  (unless (y-or-n-p "Really exit emacs? ")
+    (keyboard-quit)))
+
+;; magit
+(require 'magit)

@@ -1,12 +1,12 @@
-;; 
-;; 
+;;
+;;
 ;; 初期設定
-;; 
+;;
 ;;
 
 
 ;; PATH
-(setq exec-path (cons "/usr/local/bin" exec-path))
+(setq exec-path (cons "/opt/local/bin" (cons "/usr/local/bin" exec-path)))
 
 ;; mail address
 (setq user-mail-address "main@handlename.net")
