@@ -30,6 +30,3 @@
   "safe-save-buffers-kill-emacs"
   (unless (y-or-n-p "Really exit emacs? ")
     (keyboard-quit)))
-
-;; magit
-(require 'magit)

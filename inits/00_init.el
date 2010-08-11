@@ -1,10 +1,3 @@
-;;
-;;
-;; 初期設定
-;;
-;;
-
-
 ;; PATH
 (setq exec-path (cons "/opt/local/bin" (cons "/usr/local/bin" exec-path)))
 
