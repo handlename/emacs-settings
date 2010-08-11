@@ -2,7 +2,7 @@
 (global-set-key (kbd "C-c M-a")   'align-regexp)
 (global-set-key (kbd "C-h")       'backward-delete-char)
 (global-set-key (kbd "C-c d")     'delete-indentation)
-(global-set-key (kbd "C-c C-b d") 'describe-bindings)
+(global-set-key (kbd "C-c C-m d") 'describe-bindings)
 (global-set-key (kbd "M-g")       'goto-line)
 (global-set-key (kbd "C-S-i")     'indent-region)
 (global-set-key (kbd "C-m")       'newline-and-indent)

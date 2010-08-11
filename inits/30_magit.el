@@ -1,3 +1,3 @@
 ;; magit
 (require 'magit)
-(global-set-key (kbd "C-c C-b g") 'magit-status)
+(global-set-key (kbd "C-c C-m g") 'magit-status)
