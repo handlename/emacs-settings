@@ -4,8 +4,8 @@
 /**
  * ${1:description}
  *
- * @param   
- * @return  
+ * @param
+ * @return
  */
 private function ${2:name}(${3:params})
 {

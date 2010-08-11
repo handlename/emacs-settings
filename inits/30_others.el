@@ -19,11 +19,6 @@
 ;; uniq
 (load "uniq")
 
-
-;; linum
-(global-linum-mode t)
-
-
 ;; 終了前に確認する
 (defadvice save-buffers-kill-emacs
   (before safe-save-buffers-kill-emacs activate)

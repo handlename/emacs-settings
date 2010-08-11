@@ -1,11 +1,4 @@
 ;;
-;;
-;; 表示関連の設定
-;;
-;;
-
-
-;;
 ;; Window settings
 ;;______________________________________________________________________
 
@@ -44,18 +37,5 @@
 (set-face-foreground 'font-lock-constant-face          "#FFBF7F") ; 定数(this, selfなども)
 (set-face-foreground 'font-lock-variable-name-face     "#7F7FFF") ; 変数
 (set-face-foreground 'font-lock-type-face              "#FFFF7F") ; クラス
-(set-face-foreground 'fringe                           "#666666") ; fringe(折り返し記号なでが出る部分)
+(set-face-foreground 'fringe                           "#666666") ; fringe(折り返し記号などが出る部分)
 (set-face-background 'fringe                           "#282828") ; fringe
-
-(add-hook 'org-mode-hook
-          '(lambda ()
-             (set-face-foreground 'org-hide "#282828")))
-
-(add-hook 'mmm-mode-hook
-          '(lambda ()
-             (set-face-background 'mmm-default-submode-face "#404040")))
-
-(add-hook 'linum-mode-hook
-          '(lambda ()
-             (set-face-foreground 'linum "#666666")
-             (set-face-background 'linum "#000000")))

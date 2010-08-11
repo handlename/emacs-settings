@@ -48,3 +48,8 @@
     :front "<\\?\\(php\\)?"
     :back "\\?>")))
 (mmm-add-mode-ext-class nil "\\.yml?\\'" 'mmm-php-in-yaml)
+
+;; color
+(add-hook 'mmm-mode-hook
+          '(lambda ()
+             (set-face-background 'mmm-default-submode-face "#404040")))

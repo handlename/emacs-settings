@@ -21,10 +21,6 @@
 (column-number-mode t)
 (setq default-fill-column 72)
 
-;; 行番号表示
-(global-linum-mode)
-(setq linum-format "%4d")
-
 ;; 折り返さない
 (setq truncate-lines t)
 (setq truncate-partial-width-windows t)
