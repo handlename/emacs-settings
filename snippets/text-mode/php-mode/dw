@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: do { ... } while(...)
-# --
-do {
-    $2
-} while(${1:condition));

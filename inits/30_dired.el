@@ -105,6 +105,7 @@ Creates a buffer if necessary."
 
 
 ;; ソート
+;; (install-elisp "http://www.meadowy.org/~shirai/elips/sorter.el")
 (load "sorter")
 
 

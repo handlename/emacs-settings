@@ -1,3 +1,4 @@
+;; read-onlyならsudoで開く
 (defun th-rename-tramp-buffer ()
   (when (file-remote-p (buffer-file-name))
     (rename-buffer
@@ -21,3 +22,14 @@
   "Opens FILE with root privileges."
   (interactive "F")
   (set-buffer (find-file (concat "/sudo::" file))))
+
+
+;; sudoで固まるのを解消
+;; (eval-after-load "tramp"
+;;   '(progn
+;;      (add-to-list 'tramp-methods
+;;                   (cons "sudoHs" (copy-tree (cdr (assoc "sudo" tramp-methods)))))
+;;      (let ((x (cdr (cadr (assoc 'tramp-login-args (cdr (assoc "sudo" tramp-methods)))))))
+;;        (setcar x (cons "-i" (delete "-H" (delete "-s" (car x))))))
+;;      (let ((x (cdr (cadr (assoc 'tramp-login-args (cdr (assoc "sudoHs" tramp-methods)))))))
+;;        (setcar x (cons "-H" (delete "-H" (car x)))))))

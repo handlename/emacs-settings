@@ -1,3 +1,6 @@
+;; INSTALL
+;; (auto-install-batch "anithing")
+
 (require 'anything-config)
 
 (define-key anything-map (kbd "C-M-n") 'anything-next-source)
@@ -47,6 +50,9 @@
     (anything '(anything-c-source-emacs-commands))))
 
 ;; tag jump
+;; INSTALL
+;; (install-elisp-from-emacswiki "anything-etags.el")
+;; (install-elisp-from-emacswiki "anything-gtags.el")
 (require 'anything-etags)
 (require 'anything-gtags)
 (define-key global-map (kbd "C-x t")

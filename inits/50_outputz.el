@@ -1,3 +1,6 @@
+;; INSTALL
+;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/outputz/outputz.el")
+
 (require 'outputz)
 (load-file "~/.emacs.d/outputz-pass.el")
 (setq outputz-key outputz-pass)      ;; 復活の呪文

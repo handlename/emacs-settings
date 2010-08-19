@@ -1,3 +1,5 @@
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
+
 (require 'org-install)
 (add-hook 'org-mode-hook
           '(lambda ()

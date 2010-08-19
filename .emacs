@@ -1,7 +1,10 @@
 ;; .emacs written by NAGATA Hiroaki (handlename.net)
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/auto-install")
 
+;; INSTALL
+;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/init-loader/init-loader.el")
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits")
 

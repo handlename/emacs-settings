@@ -1,3 +1,6 @@
+;; INSTALL
+;; (install-elisp "http://github.com/chrisdone/zencoding/raw/master/zencoding-mode.el")
+
 (require 'zencoding-mode)
 (add-hook 'html-helper-mode-hook 'zencoding-mode)
 

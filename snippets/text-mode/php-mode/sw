@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: switch(...) { ... }
-# --
-switch(\$${1:var}) {
-    case: ${2:condition}
-        break;
-    default:
-}

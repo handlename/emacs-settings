@@ -1,0 +1,11 @@
+(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ddskk")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ddskk/nicola")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ddskk/tut-code")
+
+(setq load-path (cons "skk" load-path))
+(autoload 'skk-mode "skk" nil t)
+(global-set-key (kbd "C-S-h") 'skk-mode)
+;; (global-set-key "\C-xj" 'skk-auto-fill-mode)
+;; (global-set-key "\C-xt" 'skk-tutorial)
+(setq skk-large-jisyo "~/Library/Application Support/AquaSKK/SKK-JISYO.L")

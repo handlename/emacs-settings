@@ -19,7 +19,7 @@
                             "\n")))
     ))
 ;; ;; カーソルをエラー行に載せるとエラーメッセージをポップアップ表示
-;; ;; anythingと干渉するようなのでコメントアウト 
+;; ;; anythingと干渉するようなのでコメントアウト
 ;; (defadvice flymake-mode (before post-command-stuff activate compile)
 ;;   "エラー行にカーソルが当ったら自動的にエラーが minibuffer に表示されるように
 ;; post command hook に機能追加"

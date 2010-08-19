@@ -1,3 +1,8 @@
+;; INSTALL
+;; (auto-complete-batch "auto-complete development version")
+;; (auto-install-from-emacswiki "auto-complete-etags.el")
+;; (auto-install-from-emacswiki "etags-table.el")
+
 (require 'auto-complete-config)
 (require 'auto-complete-etags)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")

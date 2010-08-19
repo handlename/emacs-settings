@@ -1,4 +1,5 @@
-;; php-mode
+;; INSTALL
+;; (install-elisp-from-emacswiki "php-mode-improved.el")
 
 (require 'php-mode)
 (autoload 'php-mode "php-mode")
@@ -21,7 +22,8 @@
              ))
 
 ;; php-eval.el
-;; http://www.ne.jp/asahi/alpha/kazu/pub/emacs/php-eval.el
+;; (install-elisp "http://www.ne.jp/asahi/alpha/kazu/pub/emacs/php-eval.el")
+
 (require 'php-eval)
 
 ; リージョン内のコード(<?php ?>がなくてもOK)を評価
