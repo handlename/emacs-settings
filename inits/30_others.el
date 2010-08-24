@@ -38,3 +38,11 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 (setq uniquify-ignore-buffers-re "*[^*]+*")
+
+
+;; ;; 関数名を常に表示する
+;; (which-func-mode t)
+;; (setq which-func-modes t)
+;; (delete (assoc 'which-func-mode mode-line-format) mode-line-format)
+;; (setq-default header-line-format '(which-func-mode ("function " which-func-format)))
+;; (set-face-foreground 'which-func "#CCCCCC")

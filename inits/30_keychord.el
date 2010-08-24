@@ -6,8 +6,4 @@
 (setq key-chord-two-keys-delay 0.04)
 (key-chord-mode 1)
 
-(key-chord-define-global "gk" 'describe-bindings)
-(key-chord-define-global "ht" 'view-mode)
-
-(key-chord-define-global "p." 'magit-status)
-(key-chord-define-global "ue" 'text-adjust-space-buffer)
+(key-chord-define-global "_=" 'org-remember)
