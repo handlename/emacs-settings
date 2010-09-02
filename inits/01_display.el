@@ -4,7 +4,7 @@
 
 (if window-system
     (progn
-      (set-frame-parameter nil 'alpha 90) ; 透明度
+      (set-frame-parameter nil 'alpha 90)  ; 透明度
       (tool-bar-mode nil)                  ; ツールバー非表示
       (set-scroll-bar-mode nil)            ; スクロールバー非表示
       (setq line-spacing 0.2)              ; 行間

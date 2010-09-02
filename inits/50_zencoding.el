@@ -21,5 +21,5 @@
 
 (add-hook 'zencoding-mode-hook
           '(lambda ()
-             (local-set-key (kbd "C-S-m") 'zencoding-expand-line)
+             (local-set-key (kbd "C-z C-z") 'zencoding-expand-line)
              ))

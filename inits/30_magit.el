@@ -1,10 +1,9 @@
 ;; INSTALL
-;; $ git clone git://github.com/jdhuntington/magit.git
-;; $ ./autogen.sh
-;; $ ./configure --prefix=$HOME/.emacs.d/site-lisp/magit
-;; $ make
-;; $ sudo make install
+;; (install-elisp "http://www.gentei.org/~yuuji/software/revive.el")
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/magit/share/emacs/site-lisp")
-(require 'magit)
-(global-set-key (kbd "C-c C-m g") 'magit-status)
+(autoload 'save-current-configuration "revive" "Save status" t)
+(autoload 'resume "revive" "Resume Emacs" t)
+(autoload 'wipe "revive" "Wipe emacs" t)
+(define-key global-map (kbd "C-x S") 'save-current-configuration)
+(define-key global-map (kbd "C-x F") 'resume)
+(add-hook 'kill-emacs-hook 'save-current-configuration)
