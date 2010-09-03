@@ -30,7 +30,7 @@
 (require 'anything-c-moccur)
 (setq moccur-split-word t)
 (when (require 'migemo nil t) (setq moccur-use-migemo t))
-(setq anything-c-moccur-anything-idle-delay 0.2)   ; `anything-idle-delay'
+(setq anything-c-moccur-anything-idle-delay 0.2    ; `anything-idle-delay'
       anything-c-moccur-enable-initial-pattern nil ; はじめからキャレット位置のパターンが入力されるのを抑止
       anything-c-moccur-higligt-info-line-flag t   ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
       anything-c-moccur-enable-auto-look-flag t    ; 現在選択中の候補の位置を他の window に表示する
