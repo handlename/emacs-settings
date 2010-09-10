@@ -38,9 +38,6 @@
       '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(x)" "CANCEL(c)")))
 
 ;; org-agenda
-(setq org-agenda-files (my-org-get-recuresive-path-list (list org-directory)))
-(global-set-key (kbd "C-c A") 'org-agenda)
-
 (defun my-org-get-recuresive-path-list (file-list)
   "Get file path list recuresively."
   (let ((path-list nil))
@@ -56,5 +53,7 @@
                           (lambda(y) (string-match "\\.$\\|\\.svn\\|~$\\|\\.git" y))
                           (directory-files x t)))
                         path-list))
-               (setq path-list (push x path-list))))
+               (setq path-list (push x path-list)))) 
     path-list))
+(setq org-agenda-files (my-org-get-recuresive-path-list (list org-directory)))
+(global-set-key (kbd "C-c A") 'org-agenda)
