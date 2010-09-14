@@ -30,14 +30,13 @@
 (require 'anything-c-moccur)
 (setq moccur-split-word t)
 (when (require 'migemo nil t) (setq moccur-use-migemo t))
-(setq anything-c-moccur-anything-idle-delay 0.2    ; `anything-idle-delay'
-      anything-c-moccur-enable-initial-pattern nil ; はじめからキャレット位置のパターンが入力されるのを抑止
-      anything-c-moccur-higligt-info-line-flag t   ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
-      anything-c-moccur-enable-auto-look-flag t    ; 現在選択中の候補の位置を他の window に表示する
-      anything-c-moccur-enable-initial-pattern t)  ; `anything-c-moccur-occur-by-moccur'の起動時にポイントの位置の単語を初期パターンにする
+(setq anything-c-moccur-anything-idle-delay 0.2)    ; `anything-idle-delay'
+(setq anything-c-moccur-enable-initial-pattern nil) ; はじめからキャレット位置のパターンが入力されるのを抑止
+(setq anything-c-moccur-higligt-info-line-flag t)   ; `anything-c-moccur-dmoccur'などのコマンドでバッファの情報をハイライトする
+(setq anything-c-moccur-enable-auto-look-flag t)    ; 現在選択中の候補の位置を他の window に表示する
+(setq anything-c-moccur-enable-initial-pattern t)   ; `anything-c-moccur-occur-by-moccur'の起動時にポイントの位置の単語を初期パターンにする
 (define-key global-map (kbd "C-s") 'anything-c-moccur-occur-by-moccur)
 (define-key global-map (kbd "C-S-s") 'anything-c-moccur-dmoccur)
-
 
 ;; anything-for-files
 (define-key global-map (kbd "C-x b") 'anything-for-files)
