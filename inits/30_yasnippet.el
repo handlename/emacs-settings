@@ -8,3 +8,5 @@
 (yas/load-directory yas/root-directory)
 
 (set-face-background 'yas/field-highlight-face "#404040")
+
+(global-set-key (kbd "C-c s") 'yas/insert-snippet)

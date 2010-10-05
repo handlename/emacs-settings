@@ -56,4 +56,8 @@
                (setq path-list (push x path-list)))) 
     path-list))
 (setq org-agenda-files (my-org-get-recuresive-path-list (list org-directory)))
+
 (global-set-key (kbd "C-c A") 'org-agenda)
+(add-hook 'php-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "C-m") 'org-return-indent)))

@@ -3,6 +3,10 @@
 (require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
 
+;; color
+(set-face-background 'mmm-default-submode-face "#404040")
+
+
 ;; Setting from http://www.bookshelf.jp/soft/meadow_13.html#SEC101
 
 ;; html + css
@@ -51,5 +55,11 @@
     :back "\\?>")))
 (mmm-add-mode-ext-class nil "\\.yml?\\'" 'mmm-php-in-yaml)
 
-;; color
-(set-face-background 'mmm-default-submode-face "#404040")
+;; org + js
+(mmm-add-classes
+ '((mmm-org-js
+    :submode js-mode
+    :front "#\+BEGIN_EXAMPLE JS"
+    :front-offset -1
+    :back "\n?#\+END_EXAMPLE")))
+(mmm-add-mode-ext-class nil "\\.org?\\'" 'mmm-org-js)
