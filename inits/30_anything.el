@@ -41,6 +41,9 @@
 ;; anything-for-files
 (define-key global-map (kbd "C-x b") 'anything-for-files)
 
+;; anything-find-files
+;(define-key global-map (kbd "C-x C-f") 'anything-find-files)
+
 ;; calc
 (define-key global-map (kbd "C-c C-a c")
   (lambda ()

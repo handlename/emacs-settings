@@ -20,6 +20,15 @@
 (add-to-list 'ac-modes 'emacs-lisp-mode)
 (add-to-list 'ac-modes 'yaml-mode)
 
+; for cperl-mode
+(add-hook 'cperl-mode-hook
+          '(lambda ()
+             (progn
+               (require 'perl-completion)
+               (add-to-list 'ac-sources 'ac-source-perl-completion)
+               (perl-completion-mode t)
+              )))
+
 ; for emacs-lisp-mode
 (add-hook 'emacs-lisp-mode-hook
           '(lambda ()
