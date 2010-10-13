@@ -7,3 +7,5 @@
 (key-chord-mode 1)
 
 (key-chord-define-global "_=" 'org-remember)
+(key-chord-define-global "s-" 'whitespace-cleanup)
+(key-chord-define-global ",'" 'lispxmp)
