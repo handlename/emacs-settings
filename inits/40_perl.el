@@ -36,12 +36,18 @@
               (switch-to-buffer buffer)
             (display-buffer buffer)))))))
 
-;; hook
-(add-hook 'cperl-mode-hook
-          '(lambda ()
-             (progn
-               (local-set-key (kbd "C-x m") 'perldoc-m)
-               )))
+;; コード整形
+;; http://d.hatena.ne.jp/hakutoitoi/20090208/1234069614
+(defun perltidy-region ()
+  "Run perltidy on the current region."
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+(defun perltidy-defun ()
+  "Run perltidy on the current defun."
+  (interactive)
+  (save-excursion (mark-defun)
+                  (perltidy-region)))
 
 
 ;; pod-mode
@@ -57,4 +63,46 @@
                (auto-fill-mode 1)
                (flyspell-mode 1)
                (local-set-key (kbd "C-x m") 'perldoc-m)
+               )))
+
+;; set-perl5lib
+;; INSTALL
+(install-elisp "http://coderepos.org/share/browser/lang/elisp/set-perl5lib/set-perl5lib.el?format=txt")
+
+
+;; flymake
+;; http://unknownplace.org/memo/2007/12/21#e001
+(defvar flymake-perl-err-line-patterns
+  '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+
+(defconst flymake-allowed-perl-file-name-masks
+  '(("\\.pl$" flymake-perl-init)
+    ("\\.pm$" flymake-perl-init)
+    ("\\.t$" flymake-perl-init)))
+
+(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "perl" (list "-wc" local-file))))
+
+(defun flymake-perl-load ()
+  (interactive)
+  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+    (setq flymake-check-was-interrupted t))
+  (ad-activate 'flymake-post-syntax-check)
+  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+  (set-perl5lib)
+  (flymake-mode t))
+
+
+;; hook
+(add-hook 'cperl-mode-hook
+          '(lambda ()
+             (progn
+               (local-set-key (kbd "C-x m") 'perldoc-m)
+               'flymake-perl-load
                )))
