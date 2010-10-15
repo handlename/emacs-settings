@@ -93,3 +93,8 @@
 ;; INSTALL
 ;; (install-elisp "http://www.emacswiki.org/emacs/download/multiverse.el")
 (require 'multiverse)
+
+
+;; 小菊
+;; fild-fileでmigemoを使う
+(require 'kogiku)
