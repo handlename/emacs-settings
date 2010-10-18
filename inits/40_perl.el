@@ -1,3 +1,14 @@
+;; Indent
+(setq cperl-indent-level 4)
+(setq cperl-continued-statement-offset 4)
+(setq cperl-close-paren-offset -4)
+(setq cperl-indent-region-fix-constructs 1)
+(setq cperl-indent-parens-as-block 1)
+(setq cperl-comment-column 40)
+
+(add-to-list 'auto-mode-alist '("\\.t$" . cperl-mode))
+
+
 ;; http://d.hatena.ne.jp/hakutoitoi/20090208/1234069614
 ;; モジュールソースバッファの場合はその場で、
 ;; その他のバッファの場合は別ウィンドウに開く。
@@ -54,8 +65,7 @@
 ;; INSTALL
 ;; (install-elisp "http://github.com/renormalist/emacs-pod-mode/raw/master/pod-mode.el")
 (require 'pod-mode)
-(add-to-list 'auto-mode-alist
-             '("\\.pod$" . pod-mode))
+(add-to-list 'auto-mode-alist '("\\.pod$" . pod-mode))
 (add-hook 'pod-mode-hook
           '(lambda ()
              (progn
@@ -67,7 +77,7 @@
 
 ;; set-perl5lib
 ;; INSTALL
-(install-elisp "http://coderepos.org/share/browser/lang/elisp/set-perl5lib/set-perl5lib.el?format=txt")
+;; (install-elisp "http://coderepos.org/share/browser/lang/elisp/set-perl5lib/set-perl5lib.el?format=txt")
 
 
 ;; flymake
