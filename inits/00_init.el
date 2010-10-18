@@ -1,5 +1,7 @@
 ;; PATH
-(setq exec-path (cons "/opt/local/bin" (cons "/usr/local/bin" exec-path)))
+(setq exec-path (append
+                 exec-path
+                 '("~/perl5/perlbrew/perls/current/bin" "/opt/local/bin" "/usr/local/bin")))
 
 ;; mail address
 (setq user-mail-address "main@handlename.net")
