@@ -53,7 +53,7 @@
                           (lambda(y) (string-match "\\.$\\|\\.svn\\|~$\\|\\.git" y))
                           (directory-files x t)))
                         path-list))
-               (setq path-list (push x path-list)))) 
+               (setq path-list (push x path-list))))
     path-list))
 (setq org-agenda-files (my-org-get-recuresive-path-list (list org-directory)))
 
@@ -61,3 +61,7 @@
 (add-hook 'org-mode-hook
           '(lambda ()
              (local-set-key (kbd "C-m") 'org-return-indent)))
+
+
+(setq org-mobile-inbox-for-pull "~/Dropbox/memo/flagged.org")
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
