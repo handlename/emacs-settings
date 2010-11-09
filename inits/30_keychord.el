@@ -8,4 +8,4 @@
 
 (key-chord-define-global "_=" 'org-remember)
 (key-chord-define-global "s-" 'whitespace-cleanup)
-(key-chord-define-global ",'" 'lispxmp)
+(key-chord-define-global ",'" 'align)
