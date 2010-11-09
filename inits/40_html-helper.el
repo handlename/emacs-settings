@@ -29,3 +29,12 @@
              (local-set-key (kbd "C-c C-e") 'sgml-close-tag)
              (require 'html-font)
              (font-lock-mode t)))
+
+;; html-tt
+;; http://clouder.jp/src/elisp/html-tt-1.13.tar.gz
+;; http://www.kzfmix.com/blosxom_archive/Computer/Linux/emacstt060307.html
+(setq auto-mode-alist
+      (cons
+       '("\\.tt$" . html-helper-mode) auto-mode-alist))
+(require 'html-tt)
+(add-hook 'html-helper-mode-hook 'html-tt-load-hook)
