@@ -98,3 +98,8 @@
 ;; 小菊
 ;; fild-fileでmigemoを使う
 (require 'kogiku)
+
+
+;; sudo-ext
+;; (install-elisp-from-emacswiki "sudo-ext.el")
+(require 'sudo-ext)
