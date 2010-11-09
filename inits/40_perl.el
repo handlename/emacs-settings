@@ -6,7 +6,23 @@
 (setq cperl-indent-parens-as-block 1)
 (setq cperl-comment-column 40)
 
+(add-to-list 'auto-mode-alist '("\\.pl$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.pm$" . cperl-mode))
 (add-to-list 'auto-mode-alist '("\\.t$" . cperl-mode))
+
+
+;; perlbrewで入れたperlを使う
+;; http://d.hatena.ne.jp/kiririmode/20100925/p1
+;; http://gugod.org/2010/05/perlbrew-path-in-emacsapp.html
+(load "cl-seq")
+;;; Prepend perlbrew paths to exec-path
+(mapc (lambda (x) (add-to-list 'exec-path x))
+      (mapcar 'expand-file-name
+              (list "~/perl5/perlbrew/bin" "~/perl5/perlbrew/perls/current/bin")))
+;;; set PATH to be the same as exec-path, clobber the old PATH value.
+(setenv "PATH"
+        (reduce (lambda (a b) (concatenate 'string a ":" b))
+                exec-path))
 
 
 ;; http://d.hatena.ne.jp/hakutoitoi/20090208/1234069614
@@ -78,7 +94,7 @@
 ;; set-perl5lib
 ;; INSTALL
 ;; (install-elisp "http://coderepos.org/share/browser/lang/elisp/set-perl5lib/set-perl5lib.el?format=txt")
-
+(require 'set-perl5lib)
 
 ;; flymake
 ;; http://unknownplace.org/memo/2007/12/21#e001
