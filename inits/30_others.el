@@ -103,3 +103,10 @@
 ;; sudo-ext
 ;; (install-elisp-from-emacswiki "sudo-ext.el")
 (require 'sudo-ext)
+
+
+;; describe-face-at-point
+(defun describe-face-at-point ()
+  "Return face used at point."
+  (interactive)
+  (message "%s" (get-char-property (point) 'face)))
