@@ -4,7 +4,7 @@
 (global-set-key (kbd "C-c d")     'delete-indentation)
 (global-set-key (kbd "C-c C-m d") 'describe-bindings)
 (global-set-key (kbd "C-x f")     'fill-paragraph)
-(global-set-key (kbd "C-x M-f")   'fill-column)
+(global-set-key (kbd "C-x M-f")   'fill-region)
 (global-set-key (kbd "M-g")       'goto-line)
 (global-set-key (kbd "C-S-i")     'indent-region)
 (global-set-key (kbd "C-m")       'newline-and-indent)

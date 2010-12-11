@@ -1,7 +1,27 @@
 ;; PATH
-(setq exec-path (append
-                 exec-path
-                 '("~/perl5/perlbrew/perls/current/bin" "/opt/local/bin" "/usr/local/bin")))
+
+;; http://sakito.jp/emacs/emacsshell.html#path
+(dolist (dir (list
+              "/usr/X11/bin"
+              "/usr/local/bin"
+              "/sbin"
+              "/usr/sbin"
+              "/bin"
+              "/usr/bin"
+              "/usr/local/mysql/bin"
+              "/Developer/Tools"
+              "/usr/local/sbin"
+              "/usr/local/bin"
+              "/opt/local/sbin"
+              "/opt/local/bin"
+              (expand-file-name "~/perl5/perlbrew/perls/current/bin")
+              (expand-file-name "~/bin")
+              ))
+  ;; PATH と exec-path に同じ物を追加します
+  (when ;; (and
+      (file-exists-p dir) ;; (not (member dir exec-path)))
+    (setenv "PATH" (concat dir ":" (getenv "PATH")))
+    (setq exec-path (append (list dir) exec-path))))
 
 ;; mail address
 (setq user-mail-address "main@handlename.net")
@@ -38,3 +58,6 @@
 
 ;; スタートページ非表示
 (setq inhibit-startup-message t)
+
+;; タイムローケールを英語に
+(setq system-time-locale "C")

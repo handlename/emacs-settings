@@ -5,6 +5,7 @@
 
 ;; INSTALL
 ;; (install-elisp "http://svn.coderepos.org/share/lang/elisp/init-loader/init-loader.el")
+
 (require 'init-loader)
 (init-loader-load "~/.emacs.d/inits")
 
@@ -12,6 +13,6 @@
 ;; 10 起動前実行系
 ;; 20 関数定義
 ;; 30 追加機能系
-;; 40 メジャーモード
-;; 50 マイナーモード
+;; 40 マイナーモード
+;; 50 メジャーモード
 ;; 90 起動後実行系
