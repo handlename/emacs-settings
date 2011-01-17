@@ -1,3 +1,6 @@
+;; server
+(server-start)
+
 ;; PATH
 
 ;; http://sakito.jp/emacs/emacsshell.html#path
