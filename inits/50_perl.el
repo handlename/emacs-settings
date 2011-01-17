@@ -132,3 +132,12 @@
                (local-set-key (kbd "C-x m") 'perldoc-m)
                'flymake-perl-load
                )))
+
+;; tmt-mode
+;; for Text::MicroTemplate
+;; INSTALL
+;; (install-elisp "https://github.com/yoshiki/tmt-mode/raw/master/tmt-mode.el")
+
+(autoload 'tmt-mode "tmt-mode"
+  "Major mode for editing Text::MicroTemplate syntax")
+(add-to-list 'auto-mode-alist '("\\.mt$" . tmt-mode))
