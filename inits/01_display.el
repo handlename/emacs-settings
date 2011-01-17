@@ -13,6 +13,12 @@
         (set-frame-font "Menlo-12")
         (set-fontset-font (frame-parameter nil 'font)
                           'japanese-jisx0208
+                          (font-spec :family "M+2VM+IPAG circle" :size 14))
+        (set-fontset-font (frame-parameter nil 'font)
+                          'japanese-jisx0212
+                          (font-spec :family "M+2VM+IPAG circle" :size 14))
+        (set-fontset-font (frame-parameter nil 'font)
+                          'katakana-jisx0201
                           (font-spec :family "M+2VM+IPAG circle" :size 14)))
       (setq ns-pop-up-frames nil)))
 
