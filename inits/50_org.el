@@ -11,6 +11,9 @@
 (setq org-return-follows-link t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
+;; key bindings
+(global-set-key (kbd "C-c l") 'org-store-link)
+
 ;; org-remember
 (org-remember-insinuate)
 (setq org-directory "~/Dropbox/memo/")
