@@ -15,3 +15,6 @@
 (global-set-key (kbd "C-r")       'replace-string)
 (global-set-key (kbd "C-x F")     'set-fill-column)
 (global-set-key (kbd "C-/")       'undo)
+
+(global-set-key (kbd "C-x C-b")   nil)
+(global-set-key (kbd "C-x M-b")   'list-buffers)
