@@ -77,6 +77,24 @@
 (require 'anything-hatena-bookmark)
 (define-key global-map (kbd "C-c C-a b") 'anything-hatena-bookmark)
 
+;; anything-project
+;; INSTALL
+;; (install-elisp "https://github.com/imakado/anything-project/raw/master/anything-project.el")
+(require 'anything-project)
+(global-set-key (kbd "C-c b") 'anything-project)
+(ap:add-project
+ :name 'perl
+ :look-for '("Makefile.PL" "Build.PL")
+ :include-regexp '("\\.pm$" "\\.t$" "\\.pl$" "\\.PL$" "\\.mt$" "\\.tt$")
+ :exclude-regexp '("/tmp" "/service")
+ )
+
+(ap:add-project
+ :name 'symfony
+ :look-for '("symfony")
+ :include-regexp '("\\.php$" "\\.html" "\\.yml$" "\\.base$" "\\.txt$")
+ :exclude-regexp '("/cache" "/log" ".*/vendor" ".*/sf")
+ )
 
 ;; 候補ウィンドウを常に下部に表示
 ;; INSTALL
