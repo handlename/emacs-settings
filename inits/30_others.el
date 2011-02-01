@@ -96,7 +96,7 @@
 
 
 ;; 小菊
-;; fild-fileでmigemoを使う
+;; find-fileでmigemoを使う
 (require 'kogiku)
 
 
@@ -110,11 +110,3 @@
   "Return face used at point."
   (interactive)
   (message "%s" (get-char-property (point) 'face)))
-
-
-;; point-undo
-;; INSTALL
-;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/point-undo.el")
-(require 'point-undo)
-(define-key global-map (kbd "C-=") 'point-undo)
-(define-key global-map (kbd "C-+") 'point-redo)
