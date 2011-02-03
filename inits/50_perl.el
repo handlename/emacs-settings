@@ -70,6 +70,13 @@
   (interactive)
   (save-excursion
     (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+
+(defun perltidy-buffer ()
+  "Run perltidy on the current buffer."
+  (interactive)
+  (save-excursion (mark-whole-buffer)
+                  (perltidy-region)))
+
 (defun perltidy-defun ()
   "Run perltidy on the current defun."
   (interactive)
@@ -130,7 +137,9 @@
           '(lambda ()
              (progn
                (local-set-key (kbd "C-x m") 'perldoc-m)
+               (key-chord-define-global ",'" 'perltidy-region)
                'flymake-perl-load
+               'set-perl5lib
                )))
 
 ;; tmt-mode
