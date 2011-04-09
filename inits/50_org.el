@@ -1,6 +1,3 @@
-; 最新版を使うと org-get-x-clipboard が定義されていない旨のエラーが出るのであえて使わない
-;(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
-
 (require 'org-install)
 
 (setq org-log-done t)
@@ -14,57 +11,34 @@
 ;; key bindings
 (global-set-key (kbd "C-c l") 'org-store-link)
 
-;; org-remember
-(org-remember-insinuate)
-(setq org-directory "~/Dropbox/memo/")
-(setq org-default-notes-file (concat org-directory "note.org"))
-(setq org-remember-templates
-      '(("Todo" ?t "** TODO %?\n   %t\n   %i" nil "Inbox")
-        ("Bug" ?b "** TODO %?\n   %t   :bug:\n   %i" nil "Inbox")
-        ("Idea" ?i "** %?\n   %t\n   %i" nil "New Ideas")
-        ("Memo" ?m "** %?\n   %t\n   %i" nil "Memo")
+;; file
+(setq org-directory "~/note/")
+(setq org-my-private-file (concat org-directory "private.org"))
+(setq org-my-kayac-file (concat org-directory "kayac.org"))
+
+(setq org-default-notes-file org-my-private-file)
+(setq org-agenda-files
+      (list org-my-private-file
+            org-my-kayac-file
+            ))
+
+;; org-capture
+(setq org-capture-templates
+      '(("t" "Todo private" entry (file+olp org-my-private-file "Todo" "Unfiled") "** TODO %?\n   %T\n   %i\n")
+        ("i" "Idea private" entry (file+headline org-my-private-file "Idea") "** %?\n   %T\n   %i\n")
+        ("m" "Memo private" entry (file+headline org-my-private-file "Memo") "** %?\n   %T\n   %i\n")
+        ("T" "Todo kayac" entry (file+olp org-my-kayac-file "Todo" "Unfiled") "** TODO %?\n   %T\n   %i\n")
+        ("I" "Idea kayac" entry (file+headline org-my-kayac-file "Idea") "** %?\n   %T\n   %i\n")
+        ("M" "Memo kayac" entry (file+headline org-my-kayac-file "Memo") "** %?\n   %T\n   %i\n")
         ))
-;; (setq org-capture-templates
-;;       '(("t" "Todo" entry
-;;          (file+headline nil "Inbox")
-;;          "** TODO %?\n   %t\n   %i")
-;;         ("b" "Bug" entry
-;;          (file+headline nil "Inbox")
-;;          "** TODO %?\n   %t   :bug:\n   %i")
-;;         ("i" "Idea" entry
-;;          (file+headline nil "New Ideas")
-;;          "** %?\n   %t\n   %i")))
 
 ;; todo
 (setq org-use-fast-todo-selection t)
 (setq org-todo-keywords
       '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(x)" "CANCEL(c)")))
 
-;; org-agenda
-(defun my-org-get-recuresive-path-list (file-list)
-  "Get file path list recuresively."
-  (let ((path-list nil))
-    (unless (listp file-list)
-      (setq file-list (list file-list)))
-    (loop for x
-          in file-list
-          do (if (file-directory-p x)
-                 (setq path-list
-                       (append
-                        (my-org-get-recuresive-path-list
-                         (remove-if
-                          (lambda(y) (string-match "\\.$\\|\\.svn\\|~$\\|\\.git" y))
-                          (directory-files x t)))
-                        path-list))
-               (setq path-list (push x path-list))))
-    path-list))
-(setq org-agenda-files (my-org-get-recuresive-path-list (list org-directory)))
-
+;; keybindings
 (global-set-key (kbd "C-c A") 'org-agenda)
 (add-hook 'org-mode-hook
           '(lambda ()
              (local-set-key (kbd "C-m") 'org-return-indent)))
-
-
-(setq org-mobile-inbox-for-pull "~/Dropbox/memo/flagged.org")
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
