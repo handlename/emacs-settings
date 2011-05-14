@@ -110,3 +110,8 @@
   "Return face used at point."
   (interactive)
   (message "%s" (get-char-property (point) 'face)))
+
+
+;; yalinum.el
+(require 'yalinum)
+(global-yalinum-mode t)
