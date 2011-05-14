@@ -72,7 +72,7 @@
 (setq dired-recursive-deletes 'always)
 
 
-;; ディレクトリ移動時のあたらいいバッファを作らない
+;; ディレクトリ移動時のあたらしいバッファを作らない
 (defun dired-my-advertised-find-file ()
   (interactive)
   (let ((kill-target (current-buffer))
@@ -100,8 +100,8 @@ Creates a buffer if necessary."
               (dired up))
           (dired-goto-file dir))))))
 
-(define-key dired-mode-map "\C-m" 'dired-my-advertised-find-file)
-(define-key dired-mode-map "^" 'dired-my-up-directory)
+(define-key dired-mode-map (kbd "C-m") 'dired-my-advertised-find-file)
+(define-key dired-mode-map (kbd "C-h") 'dired-my-up-directory)
 
 
 ;; ソート
