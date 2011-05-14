@@ -15,9 +15,10 @@
                    ac-source-gtags
                    ac-source-words-in-buffer))
 
-(add-to-list 'ac-modes 'javascript-mode)
-(add-to-list 'ac-modes 'html-helper-mode)
 (add-to-list 'ac-modes 'emacs-lisp-mode)
+(add-to-list 'ac-modes 'html-helper-mode)
+(add-to-list 'ac-modes 'javascript-mode)
+(add-to-list 'ac-modes 'tmt-mode)
 (add-to-list 'ac-modes 'yaml-mode)
 
 ;; ; for cperl-mode
