@@ -1,7 +1,7 @@
 ;; http://www.namazu.org/~tsuchiya/elisp/mode-info.html
 ;; http://d.hatena.ne.jp/higepon/20080828/1219932411
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/mode-info/")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/mode-info/")
 
 (require 'mi-config)
 (setq mode-info-index-directory "~/info/index")

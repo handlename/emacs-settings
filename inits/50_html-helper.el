@@ -1,7 +1,7 @@
 ;; http://www.nongnu.org/baol-hth/
 ;; https://gist.github.com/672655
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/html-helper-mode")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/html-helper-mode")
 
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 (setq auto-mode-alist (cons '("\\.html$" . html-helper-mode) auto-mode-alist))
@@ -35,9 +35,8 @@
 ;; html-tt
 ;; http://clouder.jp/src/elisp/html-tt-1.13.tar.gz
 ;; http://www.kzfmix.com/blosxom_archive/Computer/Linux/emacstt060307.html
-(setq auto-mode-alist
-      (cons
-       '("\\.tt$" . html-helper-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.tt$" . html-helper-mode))
+(add-to-list 'auto-mode-alist '("\\.tx$" . html-helper-mode))
 (require 'html-tt)
 (add-hook 'html-helper-mode-hook 'html-tt-load-hook)
 

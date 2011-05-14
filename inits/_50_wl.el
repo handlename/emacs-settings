@@ -1,12 +1,12 @@
 ;; http://d.hatena.ne.jp/stanaka/20071025/1193286440
 ;; http://d.hatena.ne.jp/yamdan/20090430/1241105044
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/flim")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/semi")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/elmo")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/utils")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/wl")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/flim")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/semi")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/elmo")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/utils")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/wanderlust/wl")
 
 (autoload 'wl "wl" "Wanderlust" t)
 (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
