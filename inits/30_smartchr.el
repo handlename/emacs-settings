@@ -4,13 +4,6 @@
 (require 'smartchr)
 
 (defun my-smartchr-setting ()
-  (local-set-key (kbd "=") (smartchr '("=" " = " " == ")))
-  (local-set-key (kbd "+") (smartchr '("+" " + " "++" " += ")))
-  (local-set-key (kbd "-") (smartchr '("-" " - " "--" " -= ")))
-
-  (local-set-key (kbd "\"") (smartchr '("\"" "\"`!!'\"")))
-  (local-set-key (kbd "'") (smartchr '("'" "'`!!''")))
-
   (local-set-key (kbd ">") (smartchr '(">" "->" ">>")))
 
   (local-set-key (kbd "(") (smartchr '("(" "(`!!')")))
