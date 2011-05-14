@@ -8,6 +8,9 @@
 (setq org-return-follows-link t)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
+; 検索対象にアーカイブを含める
+(setq org-agenda-text-search-extra-files (quote (agenda-archives)))
+
 ;; key bindings
 (global-set-key (kbd "C-c l") 'org-store-link)
 
@@ -24,12 +27,12 @@
 
 ;; org-capture
 (setq org-capture-templates
-      '(("t" "Todo private" entry (file+olp org-my-private-file "Todo" "Unfiled") "** TODO %?\n   %T\n   %i\n")
-        ("i" "Idea private" entry (file+headline org-my-private-file "Idea") "** %?\n   %T\n   %i\n")
-        ("m" "Memo private" entry (file+headline org-my-private-file "Memo") "** %?\n   %T\n   %i\n")
-        ("T" "Todo kayac" entry (file+olp org-my-kayac-file "Todo" "Unfiled") "** TODO %?\n   %T\n   %i\n")
-        ("I" "Idea kayac" entry (file+headline org-my-kayac-file "Idea") "** %?\n   %T\n   %i\n")
-        ("M" "Memo kayac" entry (file+headline org-my-kayac-file "Memo") "** %?\n   %T\n   %i\n")
+      '(("T" "Todo private" entry (file+olp org-my-private-file "Todo" "Unfiled") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
+        ("I" "Idea private" entry (file+headline org-my-private-file "Idea") "** %?\n   %T\n   %i\n" :unnarrowed t)
+        ("M" "Memo private" entry (file+headline org-my-private-file "Memo") "** %?\n   %T\n   %i\n" :unnarrowed t)
+        ("t" "Todo kayac" entry (file+olp org-my-kayac-file "Todo" "Unfiled") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
+        ("i" "Idea kayac" entry (file+headline org-my-kayac-file "Idea") "** %?\n   %U\n   %i\n" :unnarrowed t)
+        ("m" "Memo kayac" entry (file+headline org-my-kayac-file "Memo") "** %?\n   %U\n   %i\n" :unnarrowed t)
         ))
 
 ;; todo
