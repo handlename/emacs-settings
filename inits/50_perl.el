@@ -1,9 +1,13 @@
+(auto-install-from-emacswiki "cperl-mode")
+
+(defalias 'perl-mode 'cperl-mode)
+
 ;; Indent
 (setq cperl-indent-level 4)
 (setq cperl-continued-statement-offset 4)
 (setq cperl-close-paren-offset -4)
-(setq cperl-indent-region-fix-constructs 1)
-(setq cperl-indent-parens-as-block 1)
+(setq cperl-indent-region-fix-constructs t)
+(setq cperl-indent-parens-as-block t)
 (setq cperl-comment-column 40)
 
 (add-to-list 'auto-mode-alist '("\\.pl$" . cperl-mode))
@@ -65,11 +69,13 @@
 
 ;; コード整形
 ;; http://d.hatena.ne.jp/hakutoitoi/20090208/1234069614
+                         
 (defun perltidy-region ()
-  "Run perltidy on the current region."
+  "Run perltidy based on Perl Best Practice  on the current region."
   (interactive)
   (save-excursion
-    (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+    (shell-command-on-region (point) (mark) "perltidy -q -pbp" nil t)))
+;    (shell-command-on-region (point) (mark) "perltidy -q -l=78 -i=4 -ci=4 -st -se -vt=2 -cti=0 -pt=1 -bt=1 -sbt=1 -bbt=1 -nsfs -nolq" nil t)))
 
 (defun perltidy-buffer ()
   "Run perltidy on the current buffer."
@@ -132,16 +138,6 @@
   (flymake-mode t))
 
 
-;; hook
-(add-hook 'cperl-mode-hook
-          '(lambda ()
-             (progn
-               (local-set-key (kbd "C-x m") 'perldoc-m)
-               (key-chord-define-global ",'" 'perltidy-region)
-               'flymake-perl-load
-               'set-perl5lib
-               )))
-
 ;; tmt-mode
 ;; for Text::MicroTemplate
 ;; INSTALL
@@ -150,3 +146,23 @@
 (autoload 'tmt-mode "tmt-mode"
   "Major mode for editing Text::MicroTemplate syntax")
 (add-to-list 'auto-mode-alist '("\\.mt$" . tmt-mode))
+
+
+;; perl-eval
+(defun perl-eval (begin end)
+  "Run selected region as Perl code"
+  (interactive "r")
+  (shell-command-on-region begin end "perl"))
+
+
+;; hook
+(add-hook
+ 'cperl-mode-hook
+ '(lambda ()
+    (progn
+      (local-set-key (kbd "C-x m") 'perldoc-m)
+      (local-set-key (kbd "C-x C-e") 'perl-eval)
+      'flymake-perl-load
+      'set-perl5lib
+      (key-chord-define cperl-mode-map ",'" 'perltidy-region)
+      )))
