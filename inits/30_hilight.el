@@ -25,6 +25,7 @@
 ;; highlight edit characters
 (require 'jaspace)
 (setq jaspace-highlight-tabs t)
+(setq jaspace-highlight-jaspace-face t)
 (add-hook 'mmm-mode-hook 'jaspace-mmm-mode-hook)
 
 
