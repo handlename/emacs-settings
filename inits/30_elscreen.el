@@ -1,6 +1,6 @@
 ;; http://www.morishima.net/~naoto/software/elscreen/
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
 
 (load "elscreen" "ElScreen" t)
 (setq elscreen-display-tab nil) ; タブを非表示
