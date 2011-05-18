@@ -8,9 +8,11 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/share/emacs/site-lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/color-theme")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/historyf")
 
 ;; 40
 (add-to-list 'load-path "~/.emacs.d/site-lisp/mmm-mode")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/titanium")
 
 ;; 50
 (add-to-list 'load-path "~/.emacs.d/site-lisp/evenrnote-mode/")
