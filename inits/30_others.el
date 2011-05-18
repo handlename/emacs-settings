@@ -121,7 +121,7 @@
 ;; yalinum.el
 (require 'yalinum)
 (global-yalinum-mode t)
-(setq yalinum-format 'dynamic)
+(setq yalinum-format "%4d")
 (set-face-foreground 'yalinum-face     "#888888")
 (set-face-background 'yalinum-face     "#282828")
 (set-face-foreground 'yalinum-bar-face "#282828")
