@@ -8,5 +8,5 @@
 
 (key-chord-define-global "_=" 'open-junk-file)
 (key-chord-define-global "s-" 'org-capture)
-(key-chord-define-global "ao" 'whitespace-cleanup)
+(key-chord-define-global ";q" 'whitespace-cleanup)
 (key-chord-define-global ",'" 'align)
