@@ -75,7 +75,6 @@
   (interactive)
   (save-excursion
     (shell-command-on-region (point) (mark) "perltidy -q -pbp" nil t)))
-;    (shell-command-on-region (point) (mark) "perltidy -q -l=78 -i=4 -ci=4 -st -se -vt=2 -cti=0 -pt=1 -bt=1 -sbt=1 -bbt=1 -nsfs -nolq" nil t)))
 
 (defun perltidy-buffer ()
   "Run perltidy on the current buffer."
@@ -129,12 +128,12 @@
 
 (defun flymake-perl-load ()
   (interactive)
+  (set-perl5lib)
   (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
     (setq flymake-check-was-interrupted t))
   (ad-activate 'flymake-post-syntax-check)
   (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
   (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
-  (set-perl5lib)
   (flymake-mode t))
 
 
@@ -160,9 +159,7 @@
  'cperl-mode-hook
  '(lambda ()
     (progn
+      'flymake-perl-load
       (local-set-key (kbd "C-x m") 'perldoc-m)
       (local-set-key (kbd "C-x C-e") 'perl-eval)
-      'flymake-perl-load
-      'set-perl5lib
-      (key-chord-define cperl-mode-map ",'" 'perltidy-region)
       )))
