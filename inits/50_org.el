@@ -27,10 +27,10 @@
 
 ;; org-capture
 (setq org-capture-templates
-      '(("T" "Todo private" entry (file+olp org-my-private-file "Todo") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
+      '(("T" "Todo private" entry (file+olp org-my-private-file "Todo" "Future") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
         ("I" "Idea private" entry (file+headline org-my-private-file "Idea") "** %?\n   %T\n   %i\n" :unnarrowed t)
         ("M" "Memo private" entry (file+headline org-my-private-file "Memo") "** %?\n   %T\n   %i\n" :unnarrowed t)
-        ("t" "Todo kayac" entry (file+olp org-my-kayac-file "Todo") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
+        ("t" "Todo kayac" entry (file+olp org-my-kayac-file "Todo" "Future") "** TODO %?\n   %U\n   %i\n" :unnarrowed t)
         ("i" "Idea kayac" entry (file+headline org-my-kayac-file "Idea") "** %?\n   %U\n   %i\n" :unnarrowed t)
         ("m" "Memo kayac" entry (file+headline org-my-kayac-file "Memo") "** %?\n   %U\n   %i\n" :unnarrowed t)
         ))
