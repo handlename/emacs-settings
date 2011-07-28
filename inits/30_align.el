@@ -18,6 +18,22 @@
                                     "switch\\|case\\|break\\|continue\\|do\\)[ ;]\\)"
                                     ))
 
+;; for cperl-mode
+(add-to-list 'align-rules-list
+             '(perl-assignment
+               (regexp   . "[^-=!^&*+<>/.| \t\n]\\(\\s-*[.-=!^&*+<>/|]*\\)=>?\\(\\s-*\\)\\([^= \t\n]\\|$\\)")
+               (justify  . t)
+               (tab-stop . nil)
+               (modes    . '(cperl-mode))))
+(add-to-list 'align-dq-string-modes 'cperl-mode)
+(add-to-list 'align-sq-string-modes 'cperl-mode)
+(add-to-list 'align-open-comment-modes 'cperl-mode)
+(setq align-region-separate (concat "\\(^\\s-*$\\)\\|"
+                                    "\\( [({}\\[\\]\\(/\*\\)]$ \\)\\|"
+                                    "\\(^\\s-*[)}\\(\*/\\)][,;]?$\\)\\|"
+                                    "\\(^\\s-*\\(}\\|for\\|while\\|if\\|else\\|"
+                                    "switch\\|case\\|break\\|continue\\|do\\)[ ;]\\)"
+                                    ))
 
 ;; for ruby-mode
 ;; http://d.hatena.ne.jp/rubikitch/20080227/1204051280
@@ -25,7 +41,7 @@
              '(ruby-comma-delimiter
                (regexp . ",\\(\\s-*\\)[^# \t\n]")
                (repeat . t)
-               (modes  . '(ruy-mode))))
+               (modes  . '(ruby-mode))))
 (add-to-list 'align-rules-list
              '(ruby-hash-literal
                (regexp . "\\(\\s-*\\)=>\\s-*[^# \t\n]")
