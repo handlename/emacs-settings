@@ -31,6 +31,10 @@
 ;; sequential-command
 ;; (auto-install-batch "sequential-command")
 (require 'sequential-command-config)
+(define-sequential-command seq-home
+  back-to-indentation beginning-of-line beginning-of-buffer seq-return)
+(define-sequential-command seq-end
+  end-of-line end-of-buffer seq-return)
 (sequential-command-setup-keys)
 
 
