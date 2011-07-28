@@ -5,6 +5,7 @@
 
 ;; 30
 (add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/company")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/share/emacs/site-lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/color-theme")
@@ -15,12 +16,14 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/titanium")
 
 ;; 50
+(add-to-list 'load-path "~/.emacs.d/site-lisp/coffee-mode/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/evenrnote-mode/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/html-helper-mode")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/howm")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/riece/lisp")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/scala-mode")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/slime")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/twittering-mode")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/w3m/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yatex/")
